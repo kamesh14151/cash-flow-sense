@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useApp } from "../../lib/store";
 import { AppShell } from "../../components/layout/AppShell";
 import { StressStateBadge } from "../../components/shared/StressStateBadge";
@@ -27,12 +27,15 @@ function BorrowersPage() {
     );
   }, [state.borrowers, search]);
 
-  function getAnalysis(borrowerId: string) {
-    if (state.analyses[borrowerId]) return state.analyses[borrowerId];
-    const b = state.borrowers.find((x) => x.id === borrowerId);
-    if (b) return analyzeBorrower(b, state.modelConfig);
-    return null;
-  }
+  const getAnalysis = useCallback(
+    (borrowerId: string) => {
+      if (state.analyses[borrowerId]) return state.analyses[borrowerId];
+      const b = state.borrowers.find((x) => x.id === borrowerId);
+      if (b) return analyzeBorrower(b, state.modelConfig);
+      return null;
+    },
+    [state.analyses, state.borrowers, state.modelConfig],
+  );
 
   return (
     <AppShell>

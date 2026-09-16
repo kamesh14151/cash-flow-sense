@@ -79,15 +79,17 @@ function BorrowerAnalysisPage() {
     .slice(-1)[0];
 
   // Scenario switcher options from hero demo borrowers
-  const scenarioOptions = DEMO_BORROWERS.slice(0, 2).map((b) => {
-    const a = state.analyses[b.id] ?? analyzeBorrower(b, state.modelConfig);
-    return {
-      borrower: b,
-      rsi: a.rsi.value,
-      state: a.state,
-      seasonalMatch: a.seasonalMatch,
-    };
-  });
+  const scenarioOptions = useMemo(() => {
+    return DEMO_BORROWERS.slice(0, 2).map((b) => {
+      const a = state.analyses[b.id] ?? analyzeBorrower(b, state.modelConfig);
+      return {
+        borrower: b,
+        rsi: a.rsi.value,
+        state: a.state,
+        seasonalMatch: a.seasonalMatch,
+      };
+    });
+  }, [state.analyses, state.modelConfig]);
 
   const isDemoScenario = ["BR-10482", "BR-10921"].includes(borrower.id);
 

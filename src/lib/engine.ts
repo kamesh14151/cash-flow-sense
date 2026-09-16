@@ -62,7 +62,7 @@ export function decomposeCashFlow(b: Borrower): DecompositionResult {
     const e = Math.min(income.length, s + window);
     return mean(income.slice(s, e));
   });
-  const detrended = income.map((v, i) => v - trend[i]);
+  const detrended = income.map((v, i) => v - trend[i]!);
 
   // seasonal profile learned from the first 12 observations (history baseline)
   const baseline = detrended.slice(0, Math.max(12, detrended.length - 6));
@@ -70,8 +70,8 @@ export function decomposeCashFlow(b: Borrower): DecompositionResult {
     const vals = baseline.filter((_, i) => i % 12 === m);
     return vals.length ? mean(vals) : 0;
   });
-  const seasonal = detrended.map((_, i) => profile[i % 12]);
-  const residual = income.map((v, i) => v - trend[i] - seasonal[i]);
+  const seasonal = detrended.map((_, i) => profile[i % 12]!);
+  const residual = income.map((v, i) => v - trend[i]! - seasonal[i]!);
 
   const avg = mean(income) || 1;
   const recentDetrended = detrended.slice(-4);
@@ -79,7 +79,7 @@ export function decomposeCashFlow(b: Borrower): DecompositionResult {
   // how well the recent deviation is explained by the learned seasonal shape
   const explained =
     1 -
-    mean(recentDetrended.map((d, i) => Math.abs(d - recentSeasonal[i]))) /
+    mean(recentDetrended.map((d, i) => Math.abs(d - recentSeasonal[i]!))) /
       (mean(recentDetrended.map((d) => Math.abs(d))) + avg * 0.06);
   const seasonalMatch = Math.round(clamp(explained, 0.05, 0.96) * 100);
 
@@ -92,9 +92,9 @@ export function decomposeCashFlow(b: Borrower): DecompositionResult {
     points: h.map((p, i) => ({
       label: p.label,
       observed: Math.round(p.income),
-      trend: Math.round(trend[i]),
-      seasonal: Math.round(seasonal[i]),
-      residual: Math.round(residual[i]),
+      trend: Math.round(trend[i]!),
+      seasonal: Math.round(seasonal[i]!),
+      residual: Math.round(residual[i]!),
     })),
     seasonalMatch: b.overrides?.seasonalMatch ?? seasonalMatch,
     trendDirection,
@@ -117,14 +117,14 @@ export function forecastCashFlow(b: Borrower, periods = 3, drift = 0): ForecastP
   return Array.from({ length: periods }, (_, k) => {
     const idx = last + k + 1;
     const seasonalTerm = d.points.length
-      ? d.points[idx % 12 < d.points.length ? idx % 12 : 0].seasonal
+      ? d.points[idx % 12 < d.points.length ? idx % 12 : 0]!.seasonal
       : 0;
     const base =
       mean(income.slice(-3)) + slope * (k + 1) + seasonalTerm * 0.6 + drift * avg * (k + 1);
     const band = avg * (0.07 + rv * 0.8) * (1 + k * 0.35);
     return {
       borrowerId: b.id,
-      period: nextLabel(h[last].month, k + 1),
+      period: nextLabel(h[last]!.month, k + 1),
       pointEstimate: Math.round(base),
       lowerBound: Math.round(base - band),
       upperBound: Math.round(base + band),
@@ -133,7 +133,7 @@ export function forecastCashFlow(b: Borrower, periods = 3, drift = 0): ForecastP
 }
 
 export function nextLabel(month: string, offset: number) {
-  const [y, m] = month.split("-").map(Number);
+  const [y, m] = month.split("-").map(Number) as [number, number];
   const d = new Date(Date.UTC(y, m - 1 + offset, 1));
   return d.toLocaleString("en-US", { month: "short", year: "2-digit", timeZone: "UTC" });
 }
@@ -150,7 +150,7 @@ export function calculateRSI(
   const h = b.history;
   const income = h.map((p) => p.income);
   const avg = mean(income) || 1;
-  const expectedInflow = f[0].pointEstimate;
+  const expectedInflow = f[0]!.pointEstimate;
   const expectedExpense = mean(h.slice(-3).map((p) => p.expense));
   const buffer = expectedInflow - expectedExpense - b.loan.installment;
   const ratio = buffer / Math.max(1, b.loan.installment);
@@ -298,7 +298,7 @@ export function generateRepaymentPlans(
 ): RepaymentPlanOption[] {
   const loan = b.loan;
   const state = a.state;
-  const types = config.rules[state] ?? config.rules["Seasonal Dip"];
+  const types = config.rules[state] ?? config.rules["Seasonal Dip"] ?? [];
   const inst = loan.installment;
   const afford = clamp((a.expectedInflow - a.expectedExpense) / Math.max(1, inst), 0, 2);
 
@@ -433,7 +433,7 @@ export function generateRepaymentPlans(
       0,
       plans.findIndex((p) => p.type === preferred),
     );
-    plans[idx].recommended = state !== "Stable";
+    if (plans[idx]) plans[idx].recommended = state !== "Stable";
     if (state === "Stable") plans.forEach((p) => (p.recommended = false));
   }
   return plans;
@@ -450,11 +450,11 @@ export function analyzeBorrower(
   const forecast = forecastCashFlow(b);
   const rsi = calculateRSI(b, config, cycle);
   const h = b.history;
-  const expectedInflow = forecast[0].pointEstimate;
+  const expectedInflow = forecast[0]!.pointEstimate;
   const expectedExpense = Math.round(mean(h.slice(-3).map((p) => p.expense)));
   const cashBuffer =
     b.overrides?.cashBuffer ?? Math.round(expectedInflow - expectedExpense - b.loan.installment);
-  const band = forecast[0].upperBound - forecast[0].lowerBound;
+  const band = forecast[0]!.upperBound - forecast[0]!.lowerBound;
   const forecastConfidence =
     b.overrides?.forecastConfidence ??
     Math.round(clamp(1 - band / (expectedInflow * 1.4), 0.35, 0.95) * 100);
@@ -505,7 +505,7 @@ export function hash(s: string) {
 
 export function simulateOutcome(a: Analysis, cycle: number, approvedPlan?: string): MonitoringOutcome {
   const rnd = mulberry32(hash(a.borrower.id) + cycle * 7919);
-  const forecast = a.forecast[0].pointEstimate;
+  const forecast = a.forecast[0]!.pointEstimate;
   const bias =
     a.state === "Structural Decline" ? -0.11 : a.state === "Emerging Stress" ? -0.04 : 0.02;
   const actual = Math.round(forecast * (1 + bias + (rnd() - 0.5) * 0.08));

@@ -947,5 +947,5 @@ All final decisions in the prototype remain with the human loan officer.
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is proprietary and closed-source software. All rights reserved. Unauthorized copying, distribution, or modification of this codebase is strictly prohibited.
 

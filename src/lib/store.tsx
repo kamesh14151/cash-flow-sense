@@ -132,7 +132,7 @@ const INITIAL_STATE: AppState = {
   ],
   modelConfig: INITIAL_CONFIG,
   monitoringCycle: 6,
-  isLoggedIn: false,
+  isLoggedIn: true,
   currentUser: {
     name: "Priya Sharma",
     role: "Loan Officer",

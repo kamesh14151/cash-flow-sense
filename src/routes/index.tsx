@@ -8,18 +8,8 @@ export const Route = createFileRoute("/")({
 });
 
 function LoginPage() {
-  const { state, dispatch } = useApp();
+  const { dispatch } = useApp();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (state.isLoggedIn) {
-      navigate({ to: "/dashboard" });
-    }
-  }, [state.isLoggedIn, navigate]);
-
-  if (state.isLoggedIn) {
-    return null;
-  }
 
   function handleLogin() {
     dispatch({ type: "LOGIN" });

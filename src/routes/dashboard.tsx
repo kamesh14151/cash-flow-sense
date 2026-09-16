@@ -36,16 +36,6 @@ function DashboardPage() {
   const { state } = useApp();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!state.isLoggedIn) {
-      navigate({ to: "/" });
-    }
-  }, [state.isLoggedIn, navigate]);
-
-  if (!state.isLoggedIn) {
-    return null;
-  }
-
   const allAnalyses = useMemo(() => {
     // For borrowers without cached analysis, compute on demand for KPIs
     const analyses = { ...state.analyses };

@@ -823,6 +823,26 @@ The expected build result is a successful TypeScript/application build with no b
 
 ---
 
+# Deploying to Vercel
+
+This project is fully compatible with **Vercel** out-of-the-box (using Vite + Nitro + TanStack Start).
+
+### Quick Deployment Steps:
+
+1. Push your repository to GitHub.
+2. Import the repository into [Vercel Dashboard](https://vercel.com/new).
+3. Vercel automatically detects the configuration via `vercel.json`:
+   - **Build Command**: `NITRO_PRESET=vercel npm run build`
+4. Click **Deploy**.
+
+Alternatively, deploy via Vercel CLI:
+```bash
+npx vercel
+```
+
+
+---
+
 # Demo Reset
 
 The topbar contains:

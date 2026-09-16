@@ -55,6 +55,8 @@ export interface Borrower {
     state?: StressState;
     cashBuffer?: number;
     forecastConfidence?: number;
+    expectedInflow?: number;
+    expectedExpense?: number;
   };
 }
 

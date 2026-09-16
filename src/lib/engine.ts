@@ -450,8 +450,9 @@ export function analyzeBorrower(
   const forecast = forecastCashFlow(b);
   const rsi = calculateRSI(b, config, cycle);
   const h = b.history;
-  const expectedInflow = forecast[0]!.pointEstimate;
-  const expectedExpense = Math.round(mean(h.slice(-3).map((p) => p.expense)));
+  const expectedInflow = b.overrides?.expectedInflow ?? forecast[0]!.pointEstimate;
+  const expectedExpense =
+    b.overrides?.expectedExpense ?? Math.round(mean(h.slice(-3).map((p) => p.expense)));
   const cashBuffer =
     b.overrides?.cashBuffer ?? Math.round(expectedInflow - expectedExpense - b.loan.installment);
   const band = forecast[0]!.upperBound - forecast[0]!.lowerBound;

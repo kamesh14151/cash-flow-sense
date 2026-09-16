@@ -207,6 +207,7 @@ function suresh(): Borrower {
       nextDue: "September 22, 2026",
       lastPayment: "September 4, 2026",
     },
+    history,
     overrides: {
       rsi: 76,
       seasonalMatch: 18,

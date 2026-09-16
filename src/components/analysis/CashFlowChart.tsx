@@ -173,7 +173,6 @@ export function CashFlowChart({ analysis }: Props) {
             stroke="var(--color-foreground)"
             strokeWidth={2}
             dot={false}
-            strokeDasharray={(d: { type: string }) => (d.type === "forecast" ? "5 3" : undefined)}
           />
           {/* Expenses */}
           <Line

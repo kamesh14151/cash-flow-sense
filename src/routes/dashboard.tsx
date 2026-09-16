@@ -89,8 +89,13 @@ function DashboardPage() {
     { name: "Structural Decline", value: counts["Structural Decline"] },
   ];
 
-  const meenaAnalysis = state.analyses["BR-10482"] ?? analyzeBorrower(DEMO_BORROWERS[0], state.modelConfig);
-  const sureshAnalysis = state.analyses["BR-10921"] ?? analyzeBorrower(DEMO_BORROWERS[1], state.modelConfig);
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+
+  const meenaBorrower = state.borrowers.find((b) => b.id === "BR-10482") ?? (DEMO_BORROWERS[0] as typeof DEMO_BORROWERS[number]);
+  const sureshBorrower = state.borrowers.find((b) => b.id === "BR-10921") ?? (DEMO_BORROWERS[1] as typeof DEMO_BORROWERS[number]);
+  const meenaAnalysis = state.analyses["BR-10482"] ?? analyzeBorrower(meenaBorrower, state.modelConfig);
+  const sureshAnalysis = state.analyses["BR-10921"] ?? analyzeBorrower(sureshBorrower, state.modelConfig);
 
   return (
     <AppShell>
@@ -125,7 +130,7 @@ function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           {/* Meena Card */}
           <div
-            onClick={() => navigate({ to: `/borrowers/meena` })}
+            onClick={() => navigate({ to: "/borrowers/$id", params: { id: "meena" } })}
             className="cursor-pointer border border-info/30 bg-info/5 hover:border-info/60 rounded-lg p-4 transition-all hover:shadow-sm flex flex-col justify-between"
           >
             <div>
@@ -159,7 +164,7 @@ function DashboardPage() {
 
           {/* Suresh Card */}
           <div
-            onClick={() => navigate({ to: `/borrowers/suresh` })}
+            onClick={() => navigate({ to: "/borrowers/$id", params: { id: "suresh" } })}
             className="cursor-pointer border border-danger/30 bg-danger/5 hover:border-danger/60 rounded-lg p-4 transition-all hover:shadow-sm flex flex-col justify-between"
           >
             <div>
@@ -251,11 +256,11 @@ function DashboardPage() {
               </Pie>
               <Tooltip
                 content={({ active, payload }) => {
-                  if (!active || !payload?.length) return null;
+                  if (!active || !payload || !payload.length || !payload[0]) return null;
                   const d = payload[0];
                   return (
                     <div className="bg-card border border-border rounded shadow p-2 text-[12px]">
-                      <p className="font-medium">{d.name}</p>
+                      <p className="font-medium">{String(d.name)}</p>
                       <p className="text-muted-foreground">{String(d.value)} borrowers</p>
                     </div>
                   );

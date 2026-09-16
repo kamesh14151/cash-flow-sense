@@ -145,7 +145,7 @@ export function ScenarioSwitcher({ current, options }: Props) {
               <button
                 onClick={() => {
                   setCompareOpen(false);
-                  router.navigate({ to: "/borrowers/meena" });
+                  router.navigate({ to: "/borrowers/$id", params: { id: "meena" } });
                 }}
                 className="w-full text-[12px] bg-info text-white font-medium py-1.5 rounded flex items-center justify-center gap-1 hover:bg-info/90 transition-colors"
               >
@@ -193,7 +193,7 @@ export function ScenarioSwitcher({ current, options }: Props) {
               <button
                 onClick={() => {
                   setCompareOpen(false);
-                  router.navigate({ to: "/borrowers/suresh" });
+                  router.navigate({ to: "/borrowers/$id", params: { id: "suresh" } });
                 }}
                 className="w-full text-[12px] bg-danger text-white font-medium py-1.5 rounded flex items-center justify-center gap-1 hover:bg-danger/90 transition-colors"
               >

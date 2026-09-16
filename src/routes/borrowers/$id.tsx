@@ -106,7 +106,7 @@ function BorrowerAnalysisPage() {
       newSchedule: plan.schedule,
       timestamp: new Date().toISOString(),
       reason: "Officer approved after review",
-      notes: notes || undefined,
+      ...(notes ? { notes } : {}),
       rsiAtDecision: analysis!.rsi.value,
       stateAtDecision: analysis!.state,
       evidenceSnapshot: analysis!.evidence,
@@ -133,7 +133,7 @@ function BorrowerAnalysisPage() {
       newSchedule: `${inr(loan.installment)} × ${loan.remainingPeriods}m`,
       timestamp: new Date().toISOString(),
       reason,
-      notes: notes || undefined,
+      ...(notes ? { notes } : {}),
       rsiAtDecision: analysis!.rsi.value,
       stateAtDecision: analysis!.state,
       evidenceSnapshot: analysis!.evidence,
@@ -160,7 +160,7 @@ function BorrowerAnalysisPage() {
       newSchedule: plan.schedule,
       timestamp: new Date().toISOString(),
       reason: "Officer modified plan values",
-      notes: notes || undefined,
+      ...(notes ? { notes } : {}),
       rsiAtDecision: analysis!.rsi.value,
       stateAtDecision: analysis!.state,
       evidenceSnapshot: analysis!.evidence,
@@ -512,7 +512,7 @@ function BorrowerAnalysisPage() {
                 <RepaymentPlans
                   plans={analysis.plans}
                   onReview={(planId) => setReviewPlanId(planId)}
-                  decidedPlanId={approvedDecision?.planId}
+                  {...(approvedDecision?.planId ? { decidedPlanId: approvedDecision.planId } : {})}
                 />
               </TabsContent>
             </div>

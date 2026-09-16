@@ -380,7 +380,7 @@ export function PlanReviewDrawer({
                           ...plan,
                           installment: modInstallment,
                           revisedTenure: modTenure,
-                          recoveryInstallment: modRecovery || undefined,
+                          ...(modRecovery ? { recoveryInstallment: modRecovery } : {}),
                           projectedBuffer: modBuffer,
                           tenureDelta: modTenure - loan.tenure,
                         };

@@ -198,11 +198,11 @@ function ModelInsightsPage() {
                   </Pie>
                   <Tooltip
                     content={({ active, payload }) => {
-                      if (!active || !payload?.length) return null;
+                      if (!active || !payload || !payload.length || !payload[0]) return null;
                       const d = payload[0];
                       return (
                         <div className="bg-card border border-border rounded shadow p-2 text-[12px]">
-                          <p className="font-medium">{d.name}</p>
+                          <p className="font-medium">{String(d.name)}</p>
                           <p className="text-muted-foreground">{String(d.value)} borrowers</p>
                         </div>
                       );

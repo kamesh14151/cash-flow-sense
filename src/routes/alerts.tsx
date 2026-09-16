@@ -23,19 +23,15 @@ function AlertsPage() {
   const navigate = useNavigate();
 
   const byState = useMemo(() => {
-    const analyses = { ...state.analyses };
-    for (const b of state.borrowers.slice(0, 60)) {
-      if (!analyses[b.id]) analyses[b.id] = analyzeBorrower(b, state.modelConfig);
-    }
-    const map: Partial<Record<StressState, typeof analyses[string][]>> = {};
-    for (const a of Object.values(analyses)) {
+    const map: Partial<Record<StressState, (typeof state.analyses)[string][]>> = {};
+    for (const a of Object.values(state.analyses)) {
       if (a.state !== "Stable") {
         if (!map[a.state]) map[a.state] = [];
         map[a.state]!.push(a);
       }
     }
     return map;
-  }, [state.analyses, state.borrowers, state.modelConfig]);
+  }, [state.analyses]);
 
   return (
     <AppShell>

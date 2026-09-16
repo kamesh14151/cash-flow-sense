@@ -36,29 +36,15 @@ function DashboardPage() {
   const { state } = useApp();
   const navigate = useNavigate();
 
-  const allAnalyses = useMemo(() => {
-    // For borrowers without cached analysis, compute on demand for KPIs
-    const analyses = { ...state.analyses };
-    for (const b of state.borrowers.slice(0, 50)) {
-      if (!analyses[b.id]) {
-        analyses[b.id] = analyzeBorrower(b, state.modelConfig);
-      }
-    }
-    return analyses;
-  }, [state.analyses, state.borrowers, state.modelConfig]);
-
   const counts = useMemo(() => {
     const c = { Stable: 0, "Seasonal Dip": 0, "Emerging Stress": 0, "Structural Decline": 0 };
-    for (const a of Object.values(allAnalyses)) c[a.state]++;
-    // Estimate for non-computed borrowers by archetype
-    const computed = Object.values(allAnalyses).length;
-    const remaining = state.borrowers.length - computed;
-    c.Stable += Math.round(remaining * 0.68);
-    c["Seasonal Dip"] += Math.round(remaining * 0.14);
-    c["Emerging Stress"] += Math.round(remaining * 0.1);
-    c["Structural Decline"] += Math.round(remaining * 0.08);
+    for (const a of Object.values(state.analyses)) {
+      if (a?.state && c[a.state] !== undefined) {
+        c[a.state]++;
+      }
+    }
     return c;
-  }, [allAnalyses, state.borrowers.length]);
+  }, [state.analyses]);
 
   const total = state.borrowers.length;
   const needsAttention = counts["Seasonal Dip"] + counts["Emerging Stress"];

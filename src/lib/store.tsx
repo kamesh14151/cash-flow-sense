@@ -79,11 +79,10 @@ function now() {
 
 const INITIAL_BORROWERS = generateBorrowers(200);
 
-/** Pre-compute analyses for the three hero demo borrowers so the app is
- *  immediately interactive on load. All other borrowers are analyzed lazily. */
-function buildInitialAnalyses(config: ModelConfiguration): Record<string, Analysis> {
+/** Pre-compute analyses for all borrowers so table filtering and navigation are instant. */
+function buildInitialAnalyses(config: ModelConfiguration, borrowers: Borrower[]): Record<string, Analysis> {
   const map: Record<string, Analysis> = {};
-  for (const b of DEMO_BORROWERS) {
+  for (const b of borrowers) {
     map[b.id] = analyzeBorrower(b, config);
   }
   return map;
@@ -93,7 +92,7 @@ const INITIAL_CONFIG = DEFAULT_CONFIG;
 
 const INITIAL_STATE: AppState = {
   borrowers: INITIAL_BORROWERS,
-  analyses: buildInitialAnalyses(INITIAL_CONFIG),
+  analyses: buildInitialAnalyses(INITIAL_CONFIG, INITIAL_BORROWERS),
   selectedBorrowerId: null,
   decisions: [],
   auditLog: [],
@@ -291,7 +290,7 @@ function reducer(state: AppState, action: Action): AppState {
       const freshConfig = DEFAULT_CONFIG;
       return {
         ...INITIAL_STATE,
-        analyses: buildInitialAnalyses(freshConfig),
+        analyses: buildInitialAnalyses(freshConfig, INITIAL_STATE.borrowers),
         isLoggedIn: state.isLoggedIn,
         activityFeed: [
           {
@@ -307,11 +306,10 @@ function reducer(state: AppState, action: Action): AppState {
     }
 
     case "UPDATE_CONFIG": {
-      // Re-analyze all cached borrowers with the new config
+      // Re-analyze all borrowers with the new config
       const newAnalyses: Record<string, Analysis> = {};
-      for (const [id, _] of Object.entries(state.analyses)) {
-        const b = state.borrowers.find((x) => x.id === id);
-        if (b) newAnalyses[id] = analyzeBorrower(b, action.config);
+      for (const b of state.borrowers) {
+        newAnalyses[b.id] = analyzeBorrower(b, action.config);
       }
       return { ...state, modelConfig: action.config, analyses: newAnalyses };
     }
@@ -319,7 +317,7 @@ function reducer(state: AppState, action: Action): AppState {
     case "GENERATE_BORROWERS": {
       const newBorrowers = generateBorrowers(action.count);
       const newAnalyses: Record<string, Analysis> = {};
-      for (const b of DEMO_BORROWERS) {
+      for (const b of newBorrowers) {
         newAnalyses[b.id] = analyzeBorrower(b, state.modelConfig);
       }
       const activity: ActivityEvent = {

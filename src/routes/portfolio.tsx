@@ -37,30 +37,38 @@ function PortfolioPage() {
   }
 
   const rows = useMemo(() => {
-    const q = search.toLowerCase();
-    return state.borrowers
-      .filter((b) => {
+    const q = search.trim().toLowerCase();
+    const result: { borrower: (typeof state.borrowers)[number]; analysis: (typeof state.analyses)[string] | null }[] = [];
+
+    for (const b of state.borrowers) {
+      if (q) {
         const matchSearch =
           b.name.toLowerCase().includes(q) ||
           b.id.toLowerCase().includes(q) ||
           b.occupation.toLowerCase().includes(q);
-        const a = getAnalysis(b.id);
-        const matchState = filterState === "all" || a?.state === filterState;
-        const matchOcc = filterOcc === "all" || b.occupation === filterOcc;
-        return matchSearch && matchState && matchOcc;
-      })
-      .map((b) => ({ borrower: b, analysis: getAnalysis(b.id) }))
-      .sort((x, y) => {
-        const av = x.analysis, bv = y.analysis;
-        let diff = 0;
-        if (sortField === "rsi") diff = (av?.rsi.value ?? 0) - (bv?.rsi.value ?? 0);
-        else if (sortField === "balance") diff = x.borrower.loan.balance - y.borrower.loan.balance;
-        else if (sortField === "seasonalMatch") diff = (av?.seasonalMatch ?? 0) - (bv?.seasonalMatch ?? 0);
-        else diff = x.borrower.name.localeCompare(y.borrower.name);
-        return sortDesc ? -diff : diff;
-      })
-      .slice(0, 100);
-  }, [state.borrowers, state.analyses, search, filterState, filterOcc, sortField, sortDesc]);
+        if (!matchSearch) continue;
+      }
+
+      if (filterOcc !== "all" && b.occupation !== filterOcc) continue;
+
+      const a = state.analyses[b.id] ?? analyzeBorrower(b, state.modelConfig);
+      if (filterState !== "all" && a?.state !== filterState) continue;
+
+      result.push({ borrower: b, analysis: a });
+    }
+
+    result.sort((x, y) => {
+      const av = x.analysis, bv = y.analysis;
+      let diff = 0;
+      if (sortField === "rsi") diff = (av?.rsi.value ?? 0) - (bv?.rsi.value ?? 0);
+      else if (sortField === "balance") diff = x.borrower.loan.balance - y.borrower.loan.balance;
+      else if (sortField === "seasonalMatch") diff = (av?.seasonalMatch ?? 0) - (bv?.seasonalMatch ?? 0);
+      else diff = x.borrower.name.localeCompare(y.borrower.name);
+      return sortDesc ? -diff : diff;
+    });
+
+    return result.slice(0, 100);
+  }, [state.borrowers, state.analyses, state.modelConfig, search, filterState, filterOcc, sortField, sortDesc]);
 
   const STATES: StressState[] = ["Stable", "Seasonal Dip", "Emerging Stress", "Structural Decline"];
 

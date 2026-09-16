@@ -65,46 +65,46 @@ export function RepaymentPlans({ plans, onReview, decidedPlanId }: Props) {
           </div>
 
           {/* Metrics grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-            <div className="bg-background/80 border border-border rounded-lg p-3">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Proposed Installment</p>
-              <p className="text-[16px] font-bold text-cfc-amber mt-0.5">{inr(recommendedPlan.installment)}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-4">
+            <div className="bg-background/80 border border-border rounded-lg p-2.5 sm:p-3">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-wide">Proposed Installment</p>
+              <p className="text-[14px] sm:text-[16px] font-bold text-cfc-amber mt-0.5">{inr(recommendedPlan.installment)}</p>
               {recommendedPlan.recoveryInstallment && (
-                <p className="text-[11px] text-muted-foreground mt-0.5">
+                <p className="text-[10px] sm:text-[11px] text-muted-foreground mt-0.5">
                   Step-up: {inr(recommendedPlan.recoveryInstallment)}
                 </p>
               )}
             </div>
-            <div className="bg-background/80 border border-border rounded-lg p-3">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Projected Buffer</p>
+            <div className="bg-background/80 border border-border rounded-lg p-2.5 sm:p-3">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-wide">Projected Buffer</p>
               <p
                 className={cn(
-                  "text-[16px] font-bold mt-0.5",
+                  "text-[14px] sm:text-[16px] font-bold mt-0.5",
                   recommendedPlan.projectedBuffer >= 0 ? "text-success" : "text-danger",
                 )}
               >
                 {inr(recommendedPlan.projectedBuffer)}/m
               </p>
             </div>
-            <div className="bg-background/80 border border-border rounded-lg p-3">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Tenure Impact</p>
-              <p className="text-[16px] font-bold text-foreground mt-0.5">
+            <div className="bg-background/80 border border-border rounded-lg p-2.5 sm:p-3">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-wide">Tenure Impact</p>
+              <p className="text-[14px] sm:text-[16px] font-bold text-foreground mt-0.5">
                 {recommendedPlan.revisedTenure}m
-                <span className="text-[11px] font-normal text-muted-foreground ml-1">
+                <span className="text-[10px] sm:text-[11px] font-normal text-muted-foreground ml-1">
                   ({recommendedPlan.tenureDelta >= 0 ? "+" : ""}{recommendedPlan.tenureDelta}m)
                 </span>
               </p>
             </div>
-            <div className="bg-background/80 border border-border rounded-lg p-3">
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Recovery Impact</p>
-              <p className={cn("text-[16px] font-bold mt-0.5", recoveryColor[recommendedPlan.recoveryImpact])}>
+            <div className="bg-background/80 border border-border rounded-lg p-2.5 sm:p-3">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-wide">Recovery Impact</p>
+              <p className={cn("text-[14px] sm:text-[16px] font-bold mt-0.5", recoveryColor[recommendedPlan.recoveryImpact])}>
                 {recommendedPlan.recoveryImpact}
               </p>
             </div>
           </div>
 
           {/* Schedule */}
-          <div className="mt-3 bg-muted/40 border border-border rounded-lg px-3.5 py-2 text-[12px] flex items-center justify-between">
+          <div className="mt-3 bg-muted/40 border border-border rounded-lg px-3 py-2 text-[11px] sm:text-[12px] flex flex-wrap items-center justify-between gap-1">
             <span className="text-muted-foreground font-medium">Proposed Schedule:</span>
             <span className="font-mono font-bold text-foreground">{recommendedPlan.schedule}</span>
           </div>

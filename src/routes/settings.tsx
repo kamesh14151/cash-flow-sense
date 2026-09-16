@@ -21,7 +21,7 @@ function SettingsPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 max-w-3xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl">
         {/* Profile */}
         <div className="bg-card border border-border rounded-lg p-5">
           <div className="flex items-center gap-2 mb-4">

@@ -48,7 +48,7 @@ function MonitoringPage() {
 
   return (
     <AppShell>
-      <div className="mb-5 flex items-start justify-between">
+      <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Monitoring</h1>
           <p className="text-[13px] text-muted-foreground mt-0.5">
@@ -56,7 +56,7 @@ function MonitoringPage() {
           </p>
         </div>
         <Button
-          className="gap-2"
+          className="gap-2 shrink-0 self-start sm:self-center"
           onClick={() => dispatch({ type: "RUN_NEXT_CYCLE" })}
         >
           <RefreshCw className="h-4 w-4" />
@@ -65,19 +65,19 @@ function MonitoringPage() {
       </div>
 
       {/* Pipeline flow */}
-      <div className="bg-card border border-border rounded-lg p-5 mb-5">
+      <div className="bg-card border border-border rounded-lg p-4 sm:p-5 mb-5">
         <h2 className="text-[13px] font-semibold text-foreground mb-4">Monitoring pipeline</h2>
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex flex-col sm:flex-row items-center gap-2">
           {pipelineSteps.map((s, i) => (
-            <div key={s.label} className="flex items-center gap-2">
-              <div className={`text-center px-4 py-3 rounded border ${s.active ? "border-cfc-amber/40 bg-cfc-amber/8" : "border-border bg-muted/30"}`}>
+            <div key={s.label} className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+              <div className={`text-center px-4 py-2.5 rounded border w-full sm:w-auto ${s.active ? "border-cfc-amber/40 bg-cfc-amber/8" : "border-border bg-muted/30"}`}>
                 <p className={`text-[12px] font-bold ${s.active ? "text-cfc-amber" : "text-muted-foreground"}`}>
                   {s.label}
                 </p>
                 <p className="text-[11px] text-muted-foreground mt-0.5">{s.sub}</p>
               </div>
               {i < pipelineSteps.length - 1 && (
-                <ArrowDown className="h-4 w-4 text-muted-foreground rotate-[-90deg]" />
+                <ArrowDown className="h-4 w-4 text-muted-foreground rotate-0 sm:rotate-[-90deg] my-1 sm:my-0" />
               )}
             </div>
           ))}
@@ -85,16 +85,16 @@ function MonitoringPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-5">
         {[
           { label: "Forecast accuracy", value: latestCycleOutcomes.length > 0 ? `${calib.accuracy}%` : "—" },
           { label: "MAPE", value: latestCycleOutcomes.length > 0 ? `${calib.mape}%` : "—" },
           { label: "MAE", value: latestCycleOutcomes.length > 0 ? inr(calib.mae) : "—" },
           { label: "Coverage", value: latestCycleOutcomes.length > 0 ? `${calib.coverage}%` : "—" },
         ].map((s) => (
-          <div key={s.label} className="bg-card border border-border rounded-lg p-4">
-            <p className="text-[11px] text-muted-foreground uppercase tracking-wide">{s.label}</p>
-            <p className="text-[22px] font-bold text-foreground mt-1">{s.value}</p>
+          <div key={s.label} className="bg-card border border-border rounded-lg p-3 sm:p-4">
+            <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-wide truncate">{s.label}</p>
+            <p className="text-[18px] sm:text-[22px] font-bold text-foreground mt-1">{s.value}</p>
           </div>
         ))}
       </div>
@@ -102,7 +102,7 @@ function MonitoringPage() {
       {latestCycleOutcomes.length > 0 ? (
         <>
           {/* Chart */}
-          <div className="bg-card border border-border rounded-lg p-5 mb-5">
+          <div className="bg-card border border-border rounded-lg p-4 sm:p-5 mb-5">
             <h2 className="text-[14px] font-semibold text-foreground mb-4">Forecast vs Actual</h2>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={chartData} margin={{ top: 0, right: 8, bottom: 0, left: 8 }}>
@@ -134,10 +134,11 @@ function MonitoringPage() {
 
           {/* Outcomes table */}
           <div className="bg-card border border-border rounded-lg overflow-hidden">
-            <div className="px-5 py-3 border-b border-border">
+            <div className="px-4 sm:px-5 py-3 border-b border-border">
               <h2 className="text-[14px] font-semibold text-foreground">Outcome tracking</h2>
             </div>
-            <table className="w-full text-[12px]">
+            <div className="overflow-x-auto w-full">
+              <table className="w-full text-[12px]">
               <thead>
                 <tr className="border-b border-border bg-muted/30">
                   {["Borrower", "State", "Forecast", "Actual", "Error %", "Outcome"].map((h) => (
@@ -168,6 +169,7 @@ function MonitoringPage() {
               </tbody>
             </table>
           </div>
+        </div>
         </>
       ) : (
         <div className="text-center py-16 bg-card border border-border rounded-lg">

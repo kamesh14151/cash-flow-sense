@@ -71,7 +71,7 @@ export function NotificationDrawer({ open, onClose }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
-      <SheetContent side="right" className="w-80 p-0 flex flex-col">
+      <SheetContent side="right" className="w-full max-w-xs sm:w-80 p-0 flex flex-col">
         <SheetHeader className="px-4 py-3 border-b border-border flex-row items-center justify-between">
           <SheetTitle className="text-[15px] font-semibold">Notifications</SheetTitle>
           <button onClick={onClose} className="h-7 w-7 flex items-center justify-center rounded hover:bg-muted">

@@ -59,7 +59,8 @@ function BorrowersPage() {
       </div>
 
       <div className="bg-card border border-border rounded-lg overflow-hidden">
-        <table className="w-full text-[13px]">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full text-[13px]">
           <thead>
             <tr className="border-b border-border bg-muted/30">
               {["Name", "Occupation", "ID", "Loan balance", "RSI", "State", "Seasonal match", ""].map((h) => (
@@ -99,6 +100,7 @@ function BorrowersPage() {
             })}
           </tbody>
         </table>
+        </div>
         {filtered.length > 100 && (
           <div className="px-4 py-3 text-[12px] text-muted-foreground border-t border-border">
             Showing 100 of {filtered.length} results. Refine search to narrow results.

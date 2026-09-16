@@ -33,7 +33,7 @@ export function ApprovalDialog({ open, onClose, analysis, plan, notes, onConfirm
 
         <div className="space-y-3 py-2">
           {/* Summary rows */}
-          <div className="grid grid-cols-2 gap-2 text-[12px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[12px]">
             {[
               { label: "Borrower", value: borrower.name },
               { label: "Borrower ID", value: borrower.id },
@@ -52,7 +52,7 @@ export function ApprovalDialog({ open, onClose, analysis, plan, notes, onConfirm
           </div>
 
           {/* Schedule comparison & Projected buffer */}
-          <div className="grid grid-cols-3 gap-2 text-[12px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[12px]">
             <div className="border border-border rounded px-3 py-2">
               <p className="text-[10px] text-muted-foreground mb-1">Current schedule</p>
               <p className="font-semibold">{inr(loan.installment)} × {loan.remainingPeriods}m</p>

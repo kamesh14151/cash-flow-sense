@@ -94,7 +94,7 @@ function PortfolioPage() {
           />
         </div>
         <Select value={filterState} onValueChange={(v) => setFilterState(v as "all" | StressState)}>
-          <SelectTrigger className="w-44 text-[13px]">
+          <SelectTrigger className="w-full sm:w-44 text-[13px]">
             <SelectValue placeholder="All states" />
           </SelectTrigger>
           <SelectContent>
@@ -103,7 +103,7 @@ function PortfolioPage() {
           </SelectContent>
         </Select>
         <Select value={filterOcc} onValueChange={setFilterOcc}>
-          <SelectTrigger className="w-44 text-[13px]">
+          <SelectTrigger className="w-full sm:w-44 text-[13px]">
             <SelectValue placeholder="All occupations" />
           </SelectTrigger>
           <SelectContent>
@@ -111,7 +111,7 @@ function PortfolioPage() {
           </SelectContent>
         </Select>
         <Select value={sortField} onValueChange={(v) => setSortField(v as SortField)}>
-          <SelectTrigger className="w-40 text-[13px]">
+          <SelectTrigger className="w-full sm:w-40 text-[13px]">
             <SlidersHorizontal className="h-3.5 w-3.5 mr-1.5" />
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>

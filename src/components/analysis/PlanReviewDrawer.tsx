@@ -73,15 +73,15 @@ export function PlanReviewDrawer({
           }
         }}
       >
-        <SheetContent side="right" className="w-[520px] max-w-full flex flex-col p-0 overflow-y-auto">
+        <SheetContent side="right" className="w-full sm:w-[520px] max-w-full flex flex-col p-0 overflow-y-auto max-h-[92dvh] sm:max-h-full rounded-t-xl sm:rounded-none">
           {/* Header */}
-          <SheetHeader className="px-5 py-4 border-b border-border shrink-0">
+          <SheetHeader className="px-4 sm:px-5 py-3.5 border-b border-border shrink-0">
             <div className="flex items-start justify-between gap-3">
-              <div>
-                <SheetTitle className="text-[15px] font-semibold">
+              <div className="min-w-0 pr-6">
+                <SheetTitle className="text-[14px] sm:text-[15px] font-semibold truncate">
                   Review Recommendation
                 </SheetTitle>
-                <p className="text-[12px] text-muted-foreground mt-0.5">
+                <p className="text-[11px] sm:text-[12px] text-muted-foreground mt-0.5 truncate">
                   {borrower.name} · {borrower.id} · {plan.type}
                 </p>
               </div>
@@ -90,26 +90,26 @@ export function PlanReviewDrawer({
           </SheetHeader>
 
           {/* Human-in-the-loop banner */}
-          <div className="mx-5 mt-4 border border-warning/30 bg-warning/8 rounded px-4 py-3 shrink-0">
+          <div className="mx-4 sm:mx-5 mt-3 border border-warning/30 bg-warning/8 rounded px-3.5 py-2.5 shrink-0">
             <p className="text-[12px] font-semibold text-warning">
               ⚠ Human review required
             </p>
-            <p className="text-[12px] text-muted-foreground mt-0.5">
+            <p className="text-[11px] sm:text-[12px] text-muted-foreground mt-0.5 leading-normal">
               This system recommendation requires officer approval before any action is taken.
               No loan restructuring will occur automatically.
             </p>
           </div>
 
           {/* Step indicator */}
-          <div className="flex items-center gap-0 px-5 pt-4 shrink-0">
+          <div className="flex items-center gap-0 px-4 sm:px-5 pt-3 overflow-x-auto whitespace-nowrap shrink-0 scrollbar-none">
             {STEPS.map((s, i) => (
-              <div key={s.n} className="flex items-center">
+              <div key={s.n} className="flex items-center shrink-0">
                 <button
                   onClick={() => setStep(s.n as Step)}
                   className={cn(
-                    "flex items-center gap-1.5 text-[12px] font-medium transition-colors",
+                    "flex items-center gap-1.5 text-[11px] sm:text-[12px] font-medium transition-colors",
                     step === s.n
-                      ? "text-foreground"
+                      ? "text-foreground font-bold"
                       : step > s.n
                         ? "text-success"
                         : "text-muted-foreground",
@@ -117,7 +117,7 @@ export function PlanReviewDrawer({
                 >
                   <span
                     className={cn(
-                      "h-6 w-6 rounded-full flex items-center justify-center text-[11px] font-bold border",
+                      "h-5 w-5 sm:h-6 sm:w-6 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-bold border",
                       step === s.n
                         ? "bg-foreground text-background border-foreground"
                         : step > s.n
@@ -130,14 +130,14 @@ export function PlanReviewDrawer({
                   {s.label}
                 </button>
                 {i < STEPS.length - 1 && (
-                  <div className="mx-2 h-px w-6 bg-border" />
+                  <div className="mx-1.5 sm:mx-2 h-px w-4 sm:w-6 bg-border shrink-0" />
                 )}
               </div>
             ))}
           </div>
 
           {/* Step content */}
-          <div className="flex-1 overflow-y-auto px-5 pt-4 pb-4 space-y-4">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-5 pt-3 pb-4 space-y-4">
             {/* STEP 1: Understand */}
             {step === 1 && (
               <div className="space-y-4">

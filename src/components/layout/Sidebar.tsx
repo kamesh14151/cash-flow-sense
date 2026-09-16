@@ -14,6 +14,7 @@ import {
   HelpCircle,
   Building2,
   ChevronDown,
+  X,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 
@@ -63,27 +64,54 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
+}
+
+export function Sidebar({ mobileOpen = false, onMobileClose }: SidebarProps) {
   const location = useLocation();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 flex w-56 flex-col bg-sidebar border-r border-sidebar-border">
-      {/* Logo */}
-      <div className="flex h-14 items-center px-4 border-b border-sidebar-border">
-        <div className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded bg-cfc-amber flex items-center justify-center">
-            <TrendingUp className="h-4 w-4 text-white" />
+    <>
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-xs lg:hidden transition-opacity"
+          onClick={onMobileClose}
+        />
+      )}
+
+      {/* Sidebar Container */}
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 flex w-64 lg:w-56 flex-col bg-sidebar border-r border-sidebar-border transition-transform duration-200 ease-in-out",
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+        )}
+      >
+        {/* Logo & Close button on Mobile */}
+        <div className="flex h-14 items-center justify-between px-4 border-b border-sidebar-border">
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded bg-cfc-amber flex items-center justify-center">
+              <TrendingUp className="h-4 w-4 text-white" />
+            </div>
+            <div>
+              <p className="text-[13px] font-semibold text-sidebar-foreground leading-tight">
+                Cash-Flow
+              </p>
+              <p className="text-[11px] font-semibold text-sidebar-primary leading-tight">
+                Copilot
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-[13px] font-semibold text-sidebar-foreground leading-tight">
-              Cash-Flow
-            </p>
-            <p className="text-[11px] font-semibold text-sidebar-primary leading-tight">
-              Copilot
-            </p>
-          </div>
+          <button
+            onClick={onMobileClose}
+            className="p-1 rounded text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent lg:hidden"
+            aria-label="Close menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
-      </div>
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-3 px-2">
@@ -102,6 +130,7 @@ export function Sidebar() {
                   <li key={item.to}>
                     <Link
                       to={item.to}
+                      onClick={onMobileClose}
                       className={cn(
                         "flex items-center gap-2.5 rounded px-2 py-1.5 text-[13px] font-medium transition-colors",
                         active
@@ -140,5 +169,6 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

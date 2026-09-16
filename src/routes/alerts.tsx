@@ -54,7 +54,8 @@ function AlertsPage() {
                 <span className="text-[12px] text-muted-foreground">({items.length})</span>
               </div>
               <div className="bg-card border border-border rounded-lg overflow-hidden">
-                <table className="w-full text-[12px]">
+                <div className="overflow-x-auto w-full">
+                  <table className="w-full text-[12px]">
                   <thead>
                     <tr className="border-b border-border bg-muted/30">
                       {["Borrower", "Occupation", "RSI", "Seasonal match", "Trend", "Action"].map((h) => (
@@ -91,6 +92,7 @@ function AlertsPage() {
                 </table>
               </div>
             </div>
+          </div>
           );
         })}
         {Object.values(byState).flat().length === 0 && (

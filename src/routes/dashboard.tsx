@@ -175,7 +175,7 @@ function DashboardPage() {
       </div>
 
       {/* KPI strip */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
         <KPICard
           label="Active loans"
           value={total}
@@ -206,7 +206,7 @@ function DashboardPage() {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
         {/* Portfolio health chart */}
         <div className="col-span-1 bg-card border border-border rounded-lg p-4">
           <h2 className="text-[14px] font-semibold text-foreground mb-1">Portfolio health</h2>
@@ -252,7 +252,7 @@ function DashboardPage() {
         </div>
 
         {/* Attention queue */}
-        <div className="col-span-2 bg-card border border-border rounded-lg p-4">
+        <div className="col-span-1 lg:col-span-2 bg-card border border-border rounded-lg p-4">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-[14px] font-semibold text-foreground">Attention queue</h2>
             <button

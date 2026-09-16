@@ -58,16 +58,16 @@ function ForecastsPage() {
       </div>
 
       {/* Coverage stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
           { label: "Forecast coverage", value: `${Object.keys(state.analyses).length}/${state.borrowers.length}` },
           { label: "Model", value: "STL + Prophet" },
           { label: "Horizon", value: "3 months" },
           { label: "Avg confidence", value: `${Math.round(Object.values(state.analyses).reduce((s, a) => s + a.forecastConfidence, 0) / Math.max(1, Object.values(state.analyses).length))}%` },
         ].map((s) => (
-          <div key={s.label} className="bg-card border border-border rounded-lg p-4">
-            <p className="text-[11px] text-muted-foreground uppercase tracking-wide">{s.label}</p>
-            <p className="text-[20px] font-bold text-foreground mt-1">{s.value}</p>
+          <div key={s.label} className="bg-card border border-border rounded-lg p-3 sm:p-4">
+            <p className="text-[10px] sm:text-[11px] text-muted-foreground uppercase tracking-wide truncate">{s.label}</p>
+            <p className="text-[16px] sm:text-[20px] font-bold text-foreground mt-1">{s.value}</p>
           </div>
         ))}
       </div>
@@ -75,14 +75,14 @@ function ForecastsPage() {
       {/* Demo borrower forecasts */}
       {demoForecasts.map(({ borrower, data, decomp, analysis }) => (
         <div key={borrower.id} className="bg-card border border-border rounded-lg mb-5">
-          <div className="px-5 py-4 border-b border-border">
-            <div className="flex items-center justify-between">
+          <div className="px-4 sm:px-5 py-3.5 sm:py-4 border-b border-border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h2 className="text-[15px] font-semibold text-foreground">{borrower.name}</h2>
-                <p className="text-[12px] text-muted-foreground">{borrower.occupation} · {borrower.id}</p>
+                <h2 className="text-[14px] sm:text-[15px] font-semibold text-foreground">{borrower.name}</h2>
+                <p className="text-[11px] sm:text-[12px] text-muted-foreground">{borrower.occupation} · {borrower.id}</p>
               </div>
               {analysis && (
-                <div className="text-right text-[12px]">
+                <div className="sm:text-right text-[11px] sm:text-[12px]">
                   <p className="text-muted-foreground">Confidence: <span className="font-semibold text-foreground">{analysis.forecastConfidence}%</span></p>
                   <p className="text-muted-foreground">Expected inflow: <span className="font-semibold text-foreground">{inr(analysis.expectedInflow)}</span></p>
                 </div>

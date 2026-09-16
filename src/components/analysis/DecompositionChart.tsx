@@ -31,7 +31,7 @@ export function DecompositionChart({ decomposition, seasonalMatch }: Props) {
   return (
     <div className="space-y-4">
       {/* 3 Columns: TREND / SEASONAL / RESIDUAL */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* Column 1: TREND */}
         <div
           className={`border rounded-lg p-3.5 ${

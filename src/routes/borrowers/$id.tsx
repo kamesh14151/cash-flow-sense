@@ -283,11 +283,11 @@ function BorrowerAnalysisPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main analysis */}
-        <div className="col-span-2 space-y-5">
+        <div className="col-span-1 lg:col-span-2 space-y-5">
           {/* Loan stats row */}
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
             {[
               {
                 icon: DollarSign,
@@ -314,37 +314,37 @@ function BorrowerAnalysisPage() {
                 color: "text-foreground",
               },
             ].map((s) => (
-              <div key={s.label} className="bg-card border border-border rounded-lg p-3">
+              <div key={s.label} className="bg-card border border-border rounded-lg p-2.5 sm:p-3">
                 <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
-                  <s.icon className="h-3.5 w-3.5" />
-                  <p className="text-[11px]">{s.label}</p>
+                  <s.icon className="h-3.5 w-3.5 shrink-0" />
+                  <p className="text-[10px] sm:text-[11px] truncate">{s.label}</p>
                 </div>
-                <p className={`text-[16px] font-bold ${s.color}`}>{s.value}</p>
+                <p className={`text-[14px] sm:text-[16px] font-bold ${s.color}`}>{s.value}</p>
               </div>
             ))}
           </div>
 
           {/* Tabbed analysis */}
           <Tabs defaultValue="cashflow" className="bg-card border border-border rounded-lg">
-            <TabsList className="w-full border-b border-border rounded-t-lg rounded-b-none bg-muted/30 h-auto p-1 justify-start gap-1">
-              <TabsTrigger value="cashflow" className="text-[12px] font-medium px-3 py-1.5 rounded">
+            <TabsList className="w-full border-b border-border rounded-t-lg rounded-b-none bg-muted/30 h-auto p-1 justify-start gap-1 flex overflow-x-auto whitespace-nowrap scrollbar-none">
+              <TabsTrigger value="cashflow" className="text-[12px] font-medium px-3 py-1.5 rounded shrink-0">
                 Cash-Flow Outlook
               </TabsTrigger>
-              <TabsTrigger value="decomposition" className="text-[12px] font-medium px-3 py-1.5 rounded">
+              <TabsTrigger value="decomposition" className="text-[12px] font-medium px-3 py-1.5 rounded shrink-0">
                 Decomposition
               </TabsTrigger>
-              <TabsTrigger value="rsi" className="text-[12px] font-medium px-3 py-1.5 rounded">
+              <TabsTrigger value="rsi" className="text-[12px] font-medium px-3 py-1.5 rounded shrink-0">
                 RSI Analysis
               </TabsTrigger>
-              <TabsTrigger value="evidence" className="text-[12px] font-medium px-3 py-1.5 rounded">
+              <TabsTrigger value="evidence" className="text-[12px] font-medium px-3 py-1.5 rounded shrink-0">
                 Evidence
               </TabsTrigger>
-              <TabsTrigger value="plans" className="text-[12px] font-medium px-3 py-1.5 rounded">
+              <TabsTrigger value="plans" className="text-[12px] font-medium px-3 py-1.5 rounded shrink-0">
                 Repayment Plans
               </TabsTrigger>
             </TabsList>
 
-            <div className="p-5">
+            <div className="p-3.5 sm:p-5">
               <TabsContent value="cashflow" className="mt-0">
                 <CashFlowChart analysis={analysis} />
               </TabsContent>

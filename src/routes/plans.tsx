@@ -37,7 +37,7 @@ function PlansPage() {
 
   function DecisionRow({ d }: { d: OfficerDecision }) {
     return (
-      <div className="flex items-start justify-between border-b border-border py-4 px-4 hover:bg-muted/30">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-border py-3.5 px-4 hover:bg-muted/30">
         <div className="flex items-start gap-3">
           <div>
             <p className="font-medium text-foreground text-[13px]">{d.borrowerName}</p>
@@ -48,16 +48,15 @@ function PlansPage() {
             </div>
           </div>
         </div>
-        <div className="text-right text-[12px]">
-          <p className="text-muted-foreground">{d.officerName}</p>
-          <p className="text-muted-foreground">{new Date(d.timestamp).toLocaleDateString()}</p>
+        <div className="sm:text-right text-[12px]">
+          <p className="text-muted-foreground">{d.officerName} · {new Date(d.timestamp).toLocaleDateString()}</p>
           {d.notes && <p className="text-muted-foreground/60 italic mt-1">"{d.notes}"</p>}
           {d.reason && d.action === "Rejected" && (
             <p className="text-danger mt-1 text-[11px]">{d.reason}</p>
           )}
           <button
             onClick={() => navigate({ to: `/audit-log` })}
-            className="mt-1 text-[12px] hover:text-cfc-amber flex items-center gap-1 ml-auto"
+            className="mt-1.5 text-[12px] hover:text-cfc-amber flex items-center gap-1 sm:ml-auto"
           >
             View audit <ArrowRight className="h-3 w-3" />
           </button>
@@ -76,9 +75,9 @@ function PlansPage() {
       </div>
 
       <Tabs defaultValue="pending">
-        <TabsList className="mb-4">
+        <TabsList className="mb-4 flex overflow-x-auto whitespace-nowrap scrollbar-none w-full max-w-full justify-start">
           {TABS.map((t) => (
-            <TabsTrigger key={t.value} value={t.value} className="text-[13px]">
+            <TabsTrigger key={t.value} value={t.value} className="text-[12px] sm:text-[13px] shrink-0">
               {t.label}
               {t.value === "pending" && pendingAnalyses.length > 0 && (
                 <span className="ml-1.5 h-4 w-4 rounded-full bg-warning text-white text-[10px] flex items-center justify-center">
@@ -101,7 +100,7 @@ function PlansPage() {
                 const recommended = a.plans.find((p) => p.recommended) ?? a.plans[0];
                 if (!recommended) return null;
                 return (
-                  <div key={a.borrower.id} className="flex items-start justify-between border-b border-border py-4 px-4 hover:bg-muted/30 last:border-b-0">
+                  <div key={a.borrower.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border py-4 px-4 hover:bg-muted/30 last:border-b-0">
                     <div>
                       <p className="font-medium text-foreground">{a.borrower.name}</p>
                       <p className="text-[12px] text-muted-foreground">{a.borrower.id} · {a.borrower.occupation}</p>
@@ -115,7 +114,7 @@ function PlansPage() {
                     </div>
                     <button
                       onClick={() => navigate({ to: `/borrowers/${slugFor(a.borrower)}` })}
-                      className="flex items-center gap-1.5 text-[13px] font-medium bg-foreground text-background px-3 py-1.5 rounded hover:bg-foreground/90"
+                      className="flex items-center justify-center gap-1.5 text-[12px] font-medium bg-foreground text-background px-3 py-1.5 rounded hover:bg-foreground/90 shrink-0 self-start sm:self-center"
                     >
                       Review <ArrowRight className="h-3.5 w-3.5" />
                     </button>

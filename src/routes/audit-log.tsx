@@ -45,7 +45,8 @@ function AuditLogPage() {
         </div>
       ) : (
         <div className="bg-card border border-border rounded-lg overflow-hidden">
-          <table className="w-full text-[12px]">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-[12px]">
             <thead>
               <tr className="border-b border-border bg-muted/30">
                 {["Timestamp", "Officer", "Borrower", "Action", "Plan", "RSI", "State", "Audit ID", ""].map((h) => (
@@ -87,11 +88,12 @@ function AuditLogPage() {
             </tbody>
           </table>
         </div>
+      </div>
       )}
 
       {/* Detail drawer */}
       <Sheet open={!!selected} onOpenChange={(v) => !v && setSelected(null)}>
-        <SheetContent side="right" className="w-[480px] max-w-full flex flex-col p-0 overflow-y-auto">
+        <SheetContent side="right" className="w-full sm:w-[480px] max-w-full flex flex-col p-0 overflow-y-auto max-h-[92dvh] sm:max-h-full rounded-t-xl sm:rounded-none">
           {selected && (
             <>
               <SheetHeader className="px-5 py-4 border-b border-border">

@@ -1,8 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
+
+/*
+ * Cash-Flow Copilot Design System
+ * Warm ivory editorial palette — Manus-inspired
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-soft: var(--soft);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-cfc-amber: var(--cfc-amber);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.375rem;
+  /* Warm ivory background  #F7F6F2 */
+  --background: oklch(0.974 0.007 74);
+  /* Primary text #181817 */
+  --foreground: oklch(0.129 0.008 74);
+  /* Card surface #FFFFFF */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.008 74);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.008 74);
+  /* Primary = near-black */
+  --primary: oklch(0.16 0.008 74);
+  --primary-foreground: oklch(0.97 0.007 74);
+  /* Secondary #686762 */
+  --secondary: oklch(0.94 0.008 74);
+  --secondary-foreground: oklch(0.43 0.014 74);
+  /* Muted #F0EFEA soft surface */
+  --muted: oklch(0.942 0.010 74);
+  --muted-foreground: oklch(0.59 0.016 74);
+  /* Accent amber #B87524 */
+  --accent: oklch(0.942 0.010 74);
+  --accent-foreground: oklch(0.129 0.008 74);
+  --cfc-amber: oklch(0.60 0.13 65);
+  /* Soft surface #F0EFEA */
+  --soft: oklch(0.942 0.010 74);
+  /* Border #E4E1D9 */
+  --border: oklch(0.895 0.015 74);
+  --input: oklch(0.895 0.015 74);
+  --ring: oklch(0.60 0.13 65);
+  /* Destructive / danger #B64C3D */
+  --destructive: oklch(0.52 0.16 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  /* Semantic — success #3F7957 */
+  --success: oklch(0.51 0.10 155);
+  --success-foreground: oklch(0.98 0 0);
+  /* warning #B47720 */
+  --warning: oklch(0.59 0.13 68);
+  --warning-foreground: oklch(0.98 0 0);
+  /* danger #B64C3D */
+  --danger: oklch(0.52 0.16 25);
+  --danger-foreground: oklch(0.98 0 0);
+  /* info #536B87 */
+  --info: oklch(0.52 0.07 242);
+  --info-foreground: oklch(0.98 0 0);
+  /* Charts */
+  --chart-1: oklch(0.60 0.13 65);
+  --chart-2: oklch(0.52 0.07 242);
+  --chart-3: oklch(0.51 0.10 155);
+  --chart-4: oklch(0.59 0.13 68);
+  --chart-5: oklch(0.52 0.16 25);
+  /* Sidebar */
+  --sidebar: oklch(0.129 0.008 74);
+  --sidebar-foreground: oklch(0.82 0.012 74);
+  --sidebar-primary: oklch(0.60 0.13 65);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.20 0.010 74);
+  --sidebar-accent-foreground: oklch(0.90 0.010 74);
+  --sidebar-border: oklch(0.24 0.010 74);
+  --sidebar-ring: oklch(0.60 0.13 65);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* Stress-state badge helpers — always icon + text, never color-only */
+.stress-stable    { color: var(--color-success); }
+.stress-seasonal  { color: var(--color-info); }
+.stress-emerging  { color: var(--color-warning); }
+.stress-decline   { color: var(--color-danger); }
+
+/* Thin scrollbar for sidebar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
 
 /*
  * Design system definition.

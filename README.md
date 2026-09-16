@@ -1,3916 +1,931 @@
-# Cash Flow Sense
+# Cash-Flow Copilot
 
-Build a complete, polished, end-to-end web application prototype called:
+> **AI-powered cash-flow decision intelligence for lender operations.**
 
-========================================================
+Cash-Flow Copilot is a lender operations prototype that helps loan officers understand borrower cash-flow stress before making repayment decisions.
 
-CASH-FLOW COPILOT
+Instead of treating every income decline as the same event, the system combines cash-flow forecasting, seasonal decomposition, stress scoring, evidence, and repayment-plan generation to distinguish different patterns of financial pressure.
 
-Dynamic Microloan Repayment & Cash-Flow Planning System
+The system then places the recommendation in a **human-in-the-loop officer workflow**:
 
-========================================================
+```text
+Analyze
+  ↓
+Explain
+  ↓
+Recommend
+  ↓
+Officer Review
+  ↓
+Approve / Modify / Reject
+  ↓
+Audit
+  ↓
+Monitor
+  ↓
+Recalibrate
+  ↺
+```
 
-TAGLINE:
+> **The system recommends. The officer decides.**
 
-"Understand the cash flow. Detect the stress. Structure the recovery."
+---
 
-Cash-Flow Copilot is a lender-facing decision-support platform for microfinance institutions.
+## Product Story
 
-The system continuously analyzes borrower income, expenses and repayment history, forecasts future cash flow, detects repayment stress, distinguishes seasonal income dips from structural financial decline, generates alternative repayment plans, explains the evidence behind every recommendation, and requires explicit human loan-officer approval before any plan is accepted.
+The central product idea is simple:
 
-This is a HACKATHON PROTOTYPE.
+> **Two income drops can have two different underlying stories.**
 
-Use realistic synthetic data and simulated model outputs.
+A borrower may experience a temporary decline that closely matches their historical seasonal pattern.
 
-DO NOT integrate real banking systems, UPI, payment gateways or real financial transactions.
+Another borrower may experience a persistent decline that is poorly explained by seasonality.
 
-The application should FEEL like a production-ready fintech/AI operations platform.
+Cash-Flow Copilot is designed to make that distinction visible and actionable.
 
-========================================================
+### Hero scenarios
 
-CORE PRODUCT PRINCIPLE
+| Borrower | RSI | Seasonal Match | Classification | Demonstrates |
+|---|---:|---:|---|---|
+| Meena Krishnan | 34 | 87% | Seasonal Dip | Strong historical seasonal explanation |
+| Suresh Kumar | 76 | 18% | Structural Decline | Persistent decline with weak seasonal explanation |
 
-========================================================
+These are synthetic demonstration scenarios.
 
-The most important concept in the product is:
+---
 
-NOT EVERY INCOME DROP MEANS THE SAME THING.
+# What We Built
 
-The system must distinguish between:
+The project is implemented as a complete lender operations prototype rather than a single analytics screen.
 
-1. SEASONAL DIP
+## 1. Data Ingestion
 
-Temporary decline that matches the borrower's historical income pattern.
+The application supports a simulated ingestion workflow for borrower financial data such as:
 
-and
+- Income
+- Expenses
+- Repayment history
+- Cash-flow history
 
-2. STRUCTURAL DECLINE
+The prototype also includes synthetic borrower generation for portfolio-scale demonstrations.
 
-Persistent deterioration that does not match historical seasonality.
+---
 
-The prototype must make this difference visually obvious.
+## 2. Cash-Flow Forecasting
 
-========================================================
+Historical borrower cash flow is analyzed to produce a forward-looking cash-flow outlook.
 
-END-TO-END SYSTEM
+The forecasting layer includes:
 
-========================================================
+- STL-style decomposition
+- Trend
+- Seasonality
+- Residual variation
+- Forecast values
+- Confidence information
+- Historical vs forecast visualization
 
-Implement this complete pipeline:
+The UI presents the forecast as a decision-support view rather than as a standalone chart.
 
-DATA INGESTION
+The core question is:
 
-      ↓
+> **“What happens to the borrower's cash flow if nothing changes?”**
 
-DATA QUALITY CHECK
+---
 
-      ↓
+## 3. Stress Detection — Repayment Stress Index
 
-CASH-FLOW DECOMPOSITION
+The prototype uses a **Repayment Stress Index (RSI)** to summarize repayment stress on a 0–100 scale.
 
-      ↓
+The RSI analysis considers multiple components, including:
 
-CASH-FLOW FORECAST
+- Cash Buffer Ratio
+- Residual Volatility
+- Trend Momentum
+- Repayment Track Record
+- Unexplained Seasonal Deviation
+- Expense Shock Index
 
-      ↓
+The model-insights screen exposes the RSI configuration and component weights.
 
-REPAYMENT STRESS INDEX
+The borrower analysis page explains the component-level contribution instead of displaying only a single score.
 
-      ↓
+---
 
-STRESS CLASSIFICATION
+## 4. Stress Classification
 
-      ↓
+The system classifies borrower cash-flow pressure into meaningful operational states.
 
-EVIDENCE / EXPLAINABILITY
+The main demonstration states are:
 
-      ↓
+### Stable
 
-REPAYMENT STRUCTURING ENGINE
+Cash-flow conditions are comparatively stable.
 
-      ↓
+### Seasonal Dip
 
-OFFICER REVIEW
+The borrower is experiencing pressure, but the decline has strong historical seasonal alignment.
 
-      ↓
+### Emerging Stress
 
-APPROVE / MODIFY / REJECT
+The borrower shows developing signs of repayment pressure.
 
-      ↓
+### Structural Decline
 
-AUDIT LOG
+The decline has a persistent non-seasonal component and weak historical seasonal explanation.
 
-      ↓
+---
 
-MONITOR ACTUAL OUTCOME
+# 5. Explainability / Evidence
 
-      ↓
+Cash-Flow Copilot does not stop at a classification.
 
-FORECAST VS ACTUAL
+It presents the evidence behind the classification.
 
-      ↓
+The evidence layer communicates:
 
-RECALIBRATION
+- Signal
+- Value
+- Weight impact
+- Interpretation
+- Supporting factors
+- Countering factors
 
-      ↓
+The goal is to answer:
 
-NEXT CYCLE
+> **“Why did the system reach this conclusion?”**
 
-The architecture must visually communicate that this is a continuous loop, not a one-time prediction.
+The UI intentionally presents concise evidence rather than exposing hidden model reasoning or chain-of-thought.
 
-========================================================
+---
 
-IMPORTANT HUMAN-IN-THE-LOOP RULE
+# 6. Repayment Plan Generation
 
-========================================================
+After analyzing the borrower, the engine generates repayment alternatives based on the borrower's projected affordability and stress state.
 
-THIS IS CRITICAL.
+Plans can expose:
 
-The AI/model NEVER automatically changes a loan.
+- Current installment
+- Proposed installment
+- Projected cash buffer
+- Tenure impact
+- Recovery impact
+- Rationale
 
-The system can:
+The interface distinguishes:
 
-- detect
+**SYSTEM RECOMMENDATION**
 
-- classify
+from:
 
-- forecast
+**ALTERNATIVE REPAYMENT OPTIONS**
 
-- explain
+The system recommendation is not an automatic action.
 
-- recommend
+---
 
-- simulate repayment plans
+# 7. Human-in-the-Loop Decision Workflow
 
-But ONLY the human loan officer can:
+This is a core architectural and product requirement.
 
-- approve
+The system does **not** automatically approve, reject, or execute a loan-system change.
 
-- modify
+The workflow is:
 
-- reject
+```text
+System Recommendation
+        ↓
+Officer Review
+        ↓
+Understand
+        ↓
+Compare
+        ↓
+Decide
+        ↓
+Record
+```
 
-a repayment plan.
+The officer has three decision paths:
 
-Every officer decision must generate an audit event.
+### Approve recommendation
 
-Every approved plan must show:
+The officer accepts the system recommendation.
 
-Officer
+### Modify recommendation
 
-Timestamp
+The officer changes supported repayment parameters and records the decision as an officer modification.
 
-Borrower
+### Reject recommendation
 
-Previous schedule
+The officer rejects the recommendation and provides a reason, with optional notes.
 
-New schedule
+The UI explicitly communicates:
 
-Reason
+> **Cash-Flow Copilot provides analytical recommendations. The loan officer makes the final decision.**
 
-Evidence snapshot
+And:
 
-RSI at decision time
+> **This records the officer's decision. The prototype does not automatically execute a loan-system change.**
 
-Stress state
+---
 
-Selected plan
+# 8. Auditability
 
-Never create a button called:
+Every officer decision generates an audit event.
 
-"Automatically apply"
+The audit record preserves decision-time context such as:
 
-Instead use:
+- Borrower
+- Borrower ID
+- Officer
+- Officer role
+- Timestamp
+- Decision action
+- Selected plan
+- RSI at decision time
+- Stress state at decision time
+- Previous repayment schedule
+- New repayment schedule
+- Evidence snapshot
+- Officer notes
+- Model version
+- Configuration version
 
-"Review recommendation"
+This creates a traceable chain:
 
-Then:
-
-"Approve plan"
-
-"Modify plan"
-
-"Reject recommendation"
-
-========================================================
-
-DESIGN LANGUAGE
-
-========================================================
-
-Create a premium AI product interface inspired by modern AI agent workspaces and Manus-like interfaces.
-
-Do NOT copy Manus branding or UI exactly.
-
-Visual style:
-
-- warm ivory background
-
-- black / charcoal typography
-
-- extremely clean
-
-- minimal
-
-- editorial
-
-- premium
-
-- intelligent
-
-- subtle borders
-
-- subtle shadows
-
-- compact cards
-
-- excellent whitespace
-
-- restrained accent color
-
-- sophisticated charts
-
-- smooth micro-interactions
-
-COLOR PALETTE:
-
-Background:
-
-#F7F6F2
-
-Primary:
-
-#181817
-
-Secondary:
-
-#686762
-
-Muted:
-
-#98968F
-
-Border:
-
-#E4E1D9
-
-Card:
-
-#FFFFFF
-
-Soft surface:
-
-#F0EFEA
-
-Accent:
-
-#B87524
-
-Success:
-
-#3F7957
-
-Warning:
-
-#B47720
-
-Danger:
-
-#B64C3D
-
-Info:
-
-#536B87
-
-Do not make the application colorful.
-
-Use accent colors sparingly.
-
-Stress states must ALWAYS have:
-
-- text
-
-- icon
-
-- label
-
-- color
-
-Never communicate state through color alone.
-
-========================================================
-
-TYPOGRAPHY
-
-========================================================
-
-Use Inter or Geist.
-
-Page title:
-
-30–36px
-
-font-weight 600
-
-Section title:
-
-18–22px
-
-font-weight 600
-
-Card title:
-
-14–16px
-
-font-weight 600
-
-Body:
-
-13–14px
-
-Metadata:
-
-11–12px
-
-Large KPI:
-
-28–36px
-
-Use tight typography.
-
-Avoid giant marketing-style headings inside the application.
-
-========================================================
-
-APPLICATION STRUCTURE
-
-========================================================
-
-Create these routes:
-
-/login
-
-/dashboard
-
-/portfolio
-
-/borrowers
-
-/borrowers/:id
-
-/alerts
-
-/plans
-
-/forecasts
-
-/monitoring
-
-/data-ingestion
-
-/model-insights
-
-/audit-log
-
-/settings
-
-/help
-
-========================================================
-
-AUTHENTICATION
-
-========================================================
-
-Create a realistic prototype login screen.
-
-No real authentication backend required.
-
-Login:
-
-Cash-Flow Copilot
-
-"Decision intelligence for adaptive repayment."
-
-Fields:
-
-Work email
-
-Password
-
-Button:
-
-Sign in
-
-Demo access:
-
-"Continue with demo account"
-
-Demo user:
-
-Priya Sharma
-
-Loan Officer
-
-Salem Central Branch
-
-Also allow switching role:
-
-Loan Officer
-
-Risk Manager
-
-Auditor
-
-The role should change available navigation/actions.
-
-========================================================
-
-ROLE-BASED EXPERIENCE
-
-========================================================
-
-ROLE 1:
-
-LOAN OFFICER
-
-Can:
-
-- view portfolio
-
-- inspect borrowers
-
-- review recommendations
-
-- modify plans
-
-- approve plans
-
-- reject plans
-
-- see audit history
-
-ROLE 2:
-
-RISK MANAGER
-
-Can:
-
-- view portfolio
-
-- monitor branch risk
-
-- inspect model metrics
-
-- review restructuring decisions
-
-- configure thresholds
-
-- view audit logs
-
-ROLE 3:
-
-AUDITOR
-
-Can:
-
-- inspect borrower evidence
-
-- inspect model explanations
-
-- view decision history
-
-- inspect audit snapshots
-
-Auditor should NOT have an "Approve plan" action.
-
-========================================================
-
-GLOBAL APP SHELL
-
-========================================================
-
-LEFT SIDEBAR:
-
-Logo:
-
-Cash-Flow
-
-Copilot
-
-Small label:
-
-LENDER OPERATIONS
-
-Navigation:
-
-Overview
-
-Portfolio
-
-Borrowers
-
-Alerts
-
-Plans
-
-Divider
-
-ANALYTICS
-
-Forecasts
-
-Monitoring
-
-Model Insights
-
-OPERATIONS
-
-Data Ingestion
-
-Audit Log
-
-SYSTEM
-
-Settings
-
-Help
-
-Bottom:
-
-Salem Central Branch
-
-Priya Sharma
-
-Loan Officer
-
-Profile menu.
-
-========================================================
-
-TOP BAR
-
-========================================================
-
-Top bar:
-
-Breadcrumb
-
-Global search
-
-Command palette button:
-
-⌘ K
-
-Notification bell
-
-Help
-
-Profile
-
-========================================================
-
-DASHBOARD
-
-========================================================
-
-Route:
-
-/dashboard
-
-Heading:
-
-Good evening, Priya.
-
-Subheading:
-
-"Here's what needs your attention across the branch."
-
-Date:
-
-September 16, 2026
-
-KPI cards:
-
-ACTIVE LOANS
-
-200
-
-STABLE
-
-146
-
-73%
-
-NEEDS ATTENTION
-
-38
-
-19%
-
-STRUCTURAL DECLINE
-
-16
-
-8%
-
-PORTFOLIO HEALTH
-
-Create a large chart showing borrower state distribution over the last 6 months.
-
-States:
-
-Stable
-
-Seasonal Dip
-
-Emerging Stress
-
-Structural Decline
-
-Below:
-
-ATTENTION QUEUE
-
-Table:
-
-Borrower
-
-Occupation
-
-Loan balance
-
-RSI
-
-State
-
-Seasonal match
-
-Last payment
-
-Action
-
-Sample:
-
-Meena Krishnan
-
-Farmer
-
-₹82,000
-
-34
-
-Seasonal Dip
-
-87%
-
-2 days ago
-
-Review
-
-Suresh Kumar
-
-Gig Worker
-
-₹61,200
-
-76
-
-Structural Decline
-
-18%
-
-12 days ago
-
-Review
-
-Anitha Devi
-
-Vendor
-
-₹42,000
-
-21
-
-Stable
-
-92%
-
-Yesterday
-
-View
-
-========================================================
-
-AI ACTIVITY
-
-========================================================
-
-Dashboard section:
-
-SYSTEM ACTIVITY
-
-Timeline:
-
-08:42 PM
-
-Forecast recalculated
-
-200 borrowers analyzed
-
-08:39 PM
-
-New structural decline detected
-
-Suresh Kumar
-
-08:32 PM
-
-Repayment plan approved
-
-Meena Krishnan
-
-08:12 PM
-
-Actual income received
-
-12 borrowers
-
-Make timeline interactive.
-
-========================================================
-
-PORTFOLIO
-
-========================================================
-
-Route:
-
-/portfolio
-
-Heading:
-
-Portfolio
-
-Subheading:
-
-"Monitor repayment health across the active loan book."
-
-Controls:
-
-Search
-
-State filter
-
-Occupation filter
-
-RSI range
-
-Seasonal match
-
-Sort
-
-Date range
-
-Stats:
-
-200 active
-
-146 stable
-
-38 attention
-
-16 structural decline
-
-Table with 50+ realistic synthetic borrowers.
-
-Columns:
-
-Borrower
-
-Occupation
-
-Loan balance
-
-Next installment
-
-Cash-flow trend
-
-RSI
-
-State
-
-Seasonal match
-
-Last updated
-
-Action
-
-Click borrower → detail page.
-
-========================================================
-
-BORROWERS
-
-========================================================
-
-Route:
-
-/borrowers
-
-Create borrower directory.
-
-Searchable cards/table.
-
-Filters:
-
-Occupation
-
-Stress state
-
-RSI
-
-Repayment status
-
-Each borrower card:
-
-Avatar initials
-
-Name
-
-Occupation
-
-Borrower ID
-
-Loan balance
-
-RSI
-
-Stress state
-
-Seasonal confidence
-
-"Open analysis"
-
-========================================================
-
-BORROWER DETAIL
-
-========================================================
-
-THIS IS THE PRIMARY DEMO SCREEN.
-
-Route:
-
-/borrowers/meena
-
-Header:
-
-← Portfolio
-
-Meena Krishnan
-
-Farmer
-
-Borrower ID BR-10482
-
-Loan:
-
-LN-28491
-
-Status badge:
-
-SEASONAL DIP
-
-RSI:
-
-34 / 100
-
-Description:
-
-"Low-to-moderate repayment stress with a strong seasonal-match signal."
-
-Metadata:
-
-Loan balance
-
-₹82,000
-
-Next repayment
-
-₹7,500
-
-Due
-
-September 24, 2026
-
-Last payment
-
-September 10, 2026
-
-========================================================
-
-BORROWER OVERVIEW
-
-========================================================
-
-Create four small cards:
-
-Cash buffer
-
-₹2,100 projected
-
-Repayment track record
-
-11 / 12 on time
-
-Income trend
-
-Stable
-
-Seasonal match
-
-87%
-
-========================================================
-
-CASH FLOW OUTLOOK
-
-========================================================
-
-Large interactive chart.
-
-Title:
-
-Cash-flow outlook
-
-Historical:
-
-12 months
-
-Forecast:
-
-3 repayment periods
-
-Show:
-
-Actual income
-
-Forecast
-
-Confidence band
-
-Expenses
-
-Repayment obligation
-
-Net cash flow
-
-Controls:
-
-6M
-
-12M
-
-18M
-
-Tooltip on every data point.
-
-Below:
-
-Expected next-period inflow
-
-₹27,800
-
-Expected expenses
-
-₹18,200
-
-Repayment
-
-₹7,500
-
-Projected buffer
-
-₹2,100
-
-Forecast confidence
-
-82%
-
-========================================================
-
-CASH-FLOW DECOMPOSITION
-
-========================================================
-
-Title:
-
-What's driving the cash-flow change?
-
-Three panels:
-
-TREND
-
-"Underlying income direction"
-
-SEASONAL
-
-"Recurring historical pattern"
-
-RESIDUAL
-
-"Unexpected variation"
-
-Create three visual mini charts.
-
-Show:
-
-Seasonal match
-
-87%
-
-Confidence:
-
-High
-
-Message:
-
-"The current decline closely matches this borrower's historical seasonal pattern."
-
-========================================================
-
-RSI
-
-========================================================
-
-Title:
-
-Repayment Stress Index
-
-Large circular gauge:
-
-34 / 100
-
-State:
-
-Seasonal Dip
-
-Subtitle:
-
-"Stress signal is primarily seasonal rather than structural."
-
-Six components:
-
-Cash Buffer Ratio
-
-18 / 25
-
-Residual Volatility
-
-5 / 15
-
-Trend Momentum
-
-4 / 20
-
-Repayment Track Record
-
-2 / 15
-
-Unexplained Seasonal Deviation
-
-2 / 15
-
-Expense Shock
-
-3 / 10
-
-Each component:
-
-- progress bar
-
-- score
-
-- contribution
-
-- tooltip
-
-========================================================
-
-RSI HISTORY
-
-========================================================
-
-Create a small timeline chart:
-
-RSI over previous 6 cycles.
-
-Example:
-
-Cycle 1: 22
-
-Cycle 2: 24
-
-Cycle 3: 27
-
-Cycle 4: 29
-
-Cycle 5: 31
-
-Cycle 6: 34
-
-Show that this is not a sudden unexplained jump.
-
-========================================================
-
-EXPLAINABILITY
-
-========================================================
-
-Title:
-
-Why the system classified this borrower as a Seasonal Dip
-
-Evidence cards:
-
-1.
-
-SEASONAL PATTERN
-
-87% match
-
-"Current income decline is consistent with the borrower's historical monsoon pattern."
-
-2.
-
-TREND MOMENTUM
-
-Stable
-
-"Underlying six-month income trend has not materially deteriorated."
-
-3.
-
-REPAYMENT HISTORY
-
-Strong
-
-"11 of the last 12 scheduled repayments were made on time."
-
-4.
-
-CASH BUFFER
-
-Moderate
-
-"Projected cash buffer remains positive through the next repayment period."
-
-5.
-
-EXPENSE SHOCK
-
-Low
-
-"No abnormal increase in expenses was detected."
-
-Every evidence card should have:
-
-Icon
-
-Evidence type
-
-Value
-
-Explanation
-
-Data source
-
-Contribution
-
-========================================================
-
-MODEL EVIDENCE DRAWER
-
-========================================================
-
-Button:
-
-"Inspect model evidence"
-
-Opens right-side drawer.
-
-Title:
-
-Model evidence
-
-Show feature attribution.
-
-Do NOT show chain-of-thought.
-
-Show only concise feature-level attribution.
-
-Example:
-
-Cash Buffer Ratio
-
-+18%
-
-Residual Volatility
-
-+5%
-
-Trend Momentum
-
-+4%
-
-Repayment Track Record
-
-+2%
-
-Seasonal Deviation
-
-+2%
-
-Expense Shock
-
-+3%
-
-Include:
-
-"These feature contributions explain the displayed classification."
-
-========================================================
-
-REPAYMENT STRUCTURING ENGINE
-
-========================================================
-
-Title:
-
-Repayment options
-
-Subtitle:
-
-"Alternative structures generated from projected affordability and stress state."
-
-Show 3 plans.
-
-------------------------------------------------
-
-PLAN A
-
-------------------------------------------------
-
-SEASONAL STEP-DOWN
-
-Badge:
-
-RECOMMENDED
-
-Current installment:
-
-₹7,500
-
-Proposed:
-
-₹5,200
-
-during low-income periods
-
-₹8,100
-
-during recovery periods
-
-Tenure:
-
-+1 month
-
-Projected buffer:
-
-₹2,300
-
-Recovery outlook:
-
-Strong
-
-Reason:
-
-"Matches the borrower's recurring seasonal income cycle."
-
-Button:
-
-Review recommendation
-
-------------------------------------------------
-
-PLAN B
-
-------------------------------------------------
-
-SKIP & REDISTRIBUTE
-
-Skip:
-
-1 period
-
-Redistribute:
-
-Next 5 periods
-
-New installment:
-
-₹9,000
-
-Tenure:
-
-+1 month
-
-Button:
-
-Review
-
-------------------------------------------------
-
-PLAN C
-
-------------------------------------------------
-
-TENURE EXTENSION
-
-Current tenure:
-
-18 months
-
-New tenure:
-
-21 months
-
-Installment:
-
-₹6,300
-
-Button:
-
-Review
-
-========================================================
-
-PLAN COMPARISON
-
-========================================================
-
-Create a comparison table.
-
-Columns:
-
-Current
-
-Step-down
-
-Skip & redistribute
-
-Tenure extension
-
-Rows:
-
-Installment
-
-Tenure
-
-Projected buffer
-
-Recovery impact
-
-Borrower affordability
-
-Principal recovery
-
-Risk signal
-
-Use subtle visual highlighting for recommended plan.
-
-========================================================
-
-HUMAN REVIEW
-
-========================================================
-
-Click:
-
-Review recommendation
-
-Open large side drawer.
-
-Title:
-
-Review repayment recommendation
-
-Step indicator:
-
-01 Understand
-
-02 Compare
-
-03 Decide
-
-04 Record
-
-STEP 01:
-
-Borrower summary
-
-Show:
-
-RSI
-
-State
-
-Forecast
-
-Seasonal match
-
-Cash buffer
-
-STEP 02:
-
-Plan comparison
-
-STEP 03:
-
-Officer decision
-
-Show:
-
-Recommended:
-
-Seasonal Step-Down
-
-Then buttons:
-
-Approve plan
-
-Modify plan
-
-Reject recommendation
-
-IMPORTANT:
-
-Do NOT allow automatic execution.
-
-========================================================
-
-MODIFY PLAN
-
-========================================================
-
-Click:
-
-Modify plan
-
-Open form.
-
-Fields:
-
-Low-income installment
-
-₹5,200
-
-Recovery installment
-
-₹8,100
-
-Extension
-
-1 month
-
-Optional officer note:
-
-"Plan adjusted to reflect expected harvest recovery."
-
-Show live recalculation:
-
-Projected borrower buffer
-
-₹2,300
-
-Estimated recovery
-
-98%
-
-New tenure
-
-19 months
-
-Button:
-
-Save modified recommendation
-
-Then return to decision screen.
-
-========================================================
-
-APPROVAL CONFIRMATION
-
-========================================================
-
-When officer clicks:
-
-Approve plan
-
-Show confirmation dialog:
-
-Approve repayment adjustment?
-
-Selected plan:
-
-Seasonal Step-Down
-
-Borrower:
-
-Meena Krishnan
-
-New schedule:
-
-₹5,200 × 2
-
-₹8,100 × 4
-
-Officer:
-
-Priya Sharma
-
-Timestamp:
-
-September 16, 2026 · 8:42 PM
-
-Buttons:
-
-Cancel
-
-Confirm approval
-
-After confirmation:
-
-Success state:
-
-PLAN APPROVED
-
-"Decision recorded. The repayment system has NOT automatically executed the change."
-
-Show:
-
-Approved by
-
-Priya Sharma
-
-Decision time
-
-8:42 PM
-
-Plan
-
-Seasonal Step-Down
-
-Audit ID
-
-AUD-20260916-0842
-
-Button:
-
-View audit record
-
-========================================================
-
-REJECTION FLOW
-
-========================================================
-
-If Reject:
-
-Open rejection modal.
-
-Required reason:
-
-Plan not affordable
-
-Insufficient evidence
-
-Borrower prefers current schedule
-
-Needs branch manager review
-
-Other
-
-Optional notes.
-
-Button:
-
-Record rejection
-
-Create audit entry.
-
-========================================================
-
-BRANCH MANAGER REVIEW
-
-========================================================
-
-Create plans page:
-
-/plans
-
-Sections:
-
-Pending review
-
-Approved
-
-Modified
-
-Rejected
-
-For large restructurings show:
-
-"Requires branch manager approval"
-
-Create mock escalation workflow.
-
-========================================================
-
-ALERTS
-
-========================================================
-
-/alerts
-
-Sections:
-
-Immediate attention
-
-Emerging Stress
-
-Seasonal Dips
-
-Structural Declines
-
-Forecast anomalies
-
-Each alert:
-
-Borrower
-
-Trigger
-
-RSI
-
-Detected
-
+```text
 Evidence
+   ↓
+Recommendation
+   ↓
+Officer Decision
+   ↓
+Audit Event
+```
 
-Suggested action
+The evidence snapshot is preserved as part of the decision record.
 
-Click → borrower detail.
+---
 
-========================================================
+# 9. Monitoring & Closed-Loop Recalibration
 
-SURESH STRUCTURAL DECLINE SCENARIO
+The product includes a simulated monitoring cycle.
 
-========================================================
+After a decision, the system can run another cycle and compare:
 
-Create a dedicated demo scenario.
-
-Borrower:
-
-Suresh Kumar
-
-Occupation:
-
-Gig Worker
-
-Borrower ID:
-
-BR-10921
-
-State:
-
-STRUCTURAL DECLINE
-
-RSI:
-
-76 / 100
-
-Seasonal match:
-
-18%
-
-Create income data showing:
-
-- six consecutive periods of decline
-
-- no meaningful seasonal match
-
-- increasing expenses
-
-- decreasing cash buffer
-
-- weaker repayment history
-
-Forecast:
-
-Income continues declining.
-
-Projected cash buffer:
-
-negative within two repayment periods.
-
-Evidence:
-
-1.
-
-LONG-TERM DECLINE
-
-"Income has declined for six consecutive periods."
-
-2.
-
-LOW SEASONAL MATCH
-
-"Current decline does not resemble the borrower's historical seasonal pattern."
-
-3.
-
-CASH BUFFER PRESSURE
-
-"Projected buffer becomes negative within two repayment periods."
-
-4.
-
-EXPENSE PRESSURE
-
-"Expense-to-income ratio increased from 61% to 78%."
-
-5.
-
-REPAYMENT HISTORY
-
-"Recent repayment behavior shows increasing irregularity."
-
-Make:
-
-Seasonal match = 18%
-
-visually very different from Meena's:
-
-Seasonal match = 87%
-
-========================================================
-
-SCENARIO SWITCHER
-
-========================================================
-
-At top of borrower analysis page create:
-
-DEMO SCENARIO
-
-[Meena — Seasonal Dip]
-
-[Suresh — Structural Decline]
-
-Clicking switches the entire analysis.
-
-This must update:
-
-Cash-flow chart
-
+```text
 Forecast
+   vs
+Observed Outcome
+```
 
-Decomposition
+The monitoring layer calculates forecast-performance metrics such as:
 
-RSI
+- Forecast error
+- MAPE
+- MAE
+- Accuracy/recalibration indicators
 
-Evidence
+The conceptual loop is:
 
-Stress state
-
-Repayment plans
-
-This is a major hackathon demonstration feature.
-
-========================================================
-
-DATA INGESTION
-
-========================================================
-
-Route:
-
-/data-ingestion
-
-Title:
-
-Data ingestion
-
-Options:
-
-UPLOAD DATA
-
-Drag-and-drop CSV/JSON.
-
-Required columns:
-
-borrower_id
-
-date
-
-amount
-
-type
-
-source
-
-Show sample data format.
-
-After upload:
-
-Step 1
-
-File validation
-
-Step 2
-
-Data quality
-
-Step 3
-
-Borrower mapping
-
-Step 4
-
-Analysis
-
-Show:
-
-Records
-
-Borrowers
-
-Date range
-
-Missing values
-
-Irregular intervals
-
-Invalid records
-
-Create a data quality score.
-
-Example:
-
-94 / 100
-
-Warnings:
-
-7 missing dates
-
-3 malformed records
-
-Allow:
-
-Review issues
-
-========================================================
-
-SYNTHETIC DATA GENERATOR
-
-========================================================
-
-Second option:
-
-Generate demo data
-
-Buttons:
-
-50 borrowers
-
-100 borrowers
-
-200 borrowers
-
-Archetypes:
-
-Regular / Stable
-
-Seasonal
-
-Structurally Declining
-
-After generation:
-
-200 borrowers created
-
-1,200 transaction periods
-
-3 archetypes
-
-Analysis ready
-
-Button:
-
-Run analysis
-
-========================================================
-
-FORECAST ENGINE
-
-========================================================
-
-Route:
-
-/forecasts
-
-Title:
-
-Forecast engine
-
-Stats:
-
-200 / 200 borrowers forecasted
-
-Forecast horizon:
-
-3 repayment periods
-
-Method:
-
-STL + Prophet
-
-Show:
-
-Trend
-
-Seasonal
-
-Residual
-
-Forecast
-
-Confidence band
-
-Create borrower selector.
-
-Create forecast-vs-actual chart.
-
-Metrics:
-
-Forecast MAE
-
-Forecast MAPE
-
-Coverage
-
-Make this page technical enough for judges but understandable.
-
-========================================================
-
-MONITORING
-
-========================================================
-
-Route:
-
-/monitoring
-
-Title:
-
-Monitoring loop
-
-Create large visual:
-
-FORECAST
-
-↓
-
-ACTUAL
-
-↓
-
-ERROR
-
-↓
-
-RECALIBRATION
-
-↓
-
-NEXT CYCLE
-
-Show forecast-vs-actual chart.
-
-Table:
-
-Borrower
-
-Forecast
-
-Actual
-
-Error
-
-State
-
-Last cycle
-
-Example:
-
-Meena
-
-₹27,800
-
-₹28,400
-
-+2.1%
-
-Seasonal Dip
-
-Suresh
-
-₹18,900
-
-₹16,700
-
--11.6%
-
-Structural Decline
-
-Show:
-
-Forecast accuracy
-
-91.4%
-
-Cohort calibration
-
-+3.2%
-
-========================================================
-
-OUTCOME TRACKING
-
-========================================================
-
-After a repayment plan is approved, allow simulated outcomes.
-
-For example:
-
-Plan approved
-
-Next cycle:
-
-Actual inflow
-
-₹28,400
-
-Repayment
-
-₹5,200
-
-Buffer
-
-₹3,100
-
-Outcome:
-
-RECOVERING
-
-Create outcome labels:
-
-Recovered
-
-Still stressed
-
-Re-entered stress
-
-Default risk
-
-Then show:
-
-"Forecast vs actual"
-
-and:
-
-"Plan outcome"
-
-========================================================
-
-FEEDBACK LOOP
-
-========================================================
-
-Make the monitoring system feed back into forecasting.
-
-Visual:
-
-Approved plan
-
-→ Actual outcome
-
-→ Forecast error
-
-→ Cohort recalibration
-
-→ Updated forecast
-
-→ Updated RSI
-
-Include a button:
-
-"Run next cycle"
-
-Clicking it should:
-
-- generate new actuals
-
-- compare forecast
-
-- update RSI
-
-- update borrower state
-
-- update dashboard
-
-- add audit/monitoring event
-
-========================================================
-
-MODEL INSIGHTS
-
-========================================================
-
-Route:
-
-/model-insights
-
-Title:
-
-Model insights
-
-Cards:
-
-RSI distribution
-
-State distribution
-
-Seasonal-match confidence
-
-Forecast confidence
-
-Feature contribution
-
-Create feature importance chart:
-
-Cash Buffer Ratio
-
-Trend Momentum
-
-Residual Volatility
-
-Repayment Track Record
-
-Unexplained Seasonal Deviation
-
-Expense Shock
-
-========================================================
-
-RSI CONFIGURATION
-
-========================================================
-
-Show:
-
-RSI weights
-
-Cash Buffer Ratio
-
-25%
-
-Residual Volatility
-
-15%
-
-Trend Momentum
-
-20%
-
-Repayment Track Record
-
-15%
-
-Unexplained Seasonal Deviation
-
-15%
-
-Expense Shock
-
-10%
-
-Use sliders.
-
-Show:
-
-Total = 100%
-
-Button:
-
-Save configuration
-
-========================================================
-
-STRESS THRESHOLDS
-
-========================================================
-
-Show:
-
-Stable
-
-0–30
-
-Seasonal Dip
-
-31–50
-
-Emerging Stress
-
-51–70
-
-Structural Decline
-
-71–100
-
-Show explanation.
-
-These are demo configuration values.
-
-========================================================
-
-STRUCTURING RULES
-
-========================================================
-
-Display editable rules:
-
-Seasonal Dip
-
-→ Step-down
-
-→ Skip & redistribute
-
-Emerging Stress
-
-→ Step-down
-
-→ Tenure extension
-
-Structural Decline
-
-→ Moratorium
-
-→ Tenure extension
-
-Stable + strong trend
-
-→ Early close
-
-→ Top-up eligibility
-
-Make this configuration-driven.
-
-========================================================
-
-AUDIT LOG
-
-========================================================
-
-Route:
-
-/audit-log
-
-Title:
-
-Decision audit log
-
-Every decision must appear here.
-
-Columns:
-
-Timestamp
-
-Officer
-
-Borrower
-
-Action
-
-Plan
-
-RSI
-
-State
-
-Evidence snapshot
-
-Audit ID
-
-Actions:
-
-Approved
-
-Modified
-
-Rejected
-
-Click event.
-
-Open detailed audit drawer.
-
-Show:
-
+```text
 Decision
-
-Officer
-
-Timestamp
-
-Borrower
-
-RSI at decision
-
-Stress state
-
-Selected plan
-
-Previous schedule
-
-New schedule
-
-Evidence presented
-
-Officer notes
-
-Model version
-
-Configuration version
-
-========================================================
-
-AUDIT IMMUTABILITY UI
-
-========================================================
-
-Show:
-
-"Decision snapshot"
-
-"Evidence shown at decision time"
-
-"Configuration at decision time"
-
-This demonstrates that the system can later explain why the decision was made.
-
-========================================================
-
-BORROWER TIMELINE
-
-========================================================
-
-On borrower detail page add:
-
-Activity timeline.
-
-Examples:
-
-Sep 16
-
-Forecast recalculated
-
-Sep 16
-
-RSI changed
-
-31 → 34
-
-Sep 16
-
-Seasonal Dip detected
-
-Sep 16
-
-Step-down plan recommended
-
-Sep 16
-
-Plan approved by Priya Sharma
-
-Sep 24
-
-Next repayment due
-
-========================================================
-
-POSITIVE RECOMMENDATIONS
-
-========================================================
-
-For strong stable borrowers show optional section:
-
-"Positive opportunities"
-
-Example:
-
-Anitha Devi
-
-Stable
-
-RSI 18
-
-Strong upward cash-flow trend.
-
-Possible options:
-
-Early close
-
-Top-up eligibility
-
-Do NOT show these as mandatory.
-
-========================================================
-
-COMMAND PALETTE
-
-========================================================
-
-Implement:
-
-Ctrl + K
-
-or
-
-Cmd + K
-
-Search:
-
-Borrowers
-
-Loans
-
-Alerts
-
-Plans
-
-Audit events
-
-Pages
-
-Example:
-
-Search "Meena"
-
-Result:
-
-Meena Krishnan
-
-Farmer
-
-RSI 34
-
-Seasonal Dip
-
-========================================================
-
-NOTIFICATIONS
-
-========================================================
-
-Create notification drawer.
-
-Examples:
-
-New structural decline detected
-
-Suresh Kumar
-
-RSI 76
-
-Plan awaiting approval
-
-Meena Krishnan
-
-Forecast recalibration complete
-
-12 borrowers updated
-
-========================================================
-
-HELP / PRODUCT EDUCATION
-
-========================================================
-
-Create /help.
-
-Explain:
-
-What is RSI?
-
-What is seasonal match?
-
-What is forecast confidence?
-
-Why does the system need officer approval?
-
-What does structural decline mean?
-
-Keep explanations short.
-
-========================================================
-
-MOCK DATA ARCHITECTURE
-
-========================================================
-
-Use TypeScript interfaces.
-
-Entities:
-
-Borrower
-
-Loan
-
-Transaction
-
-ForecastResult
-
-DecompositionResult
-
-RSIScore
-
-Evidence
-
-RepaymentPlanOption
-
-OfficerDecision
-
-AuditEvent
-
-MonitoringOutcome
-
-ModelConfiguration
-
-========================================================
-
-BORROWER MODEL
-
-========================================================
-
-Example:
-
-{
-
- id: "BR-10482",
-
- name: "Meena Krishnan",
-
- occupation: "Farmer",
-
- state: "Seasonal Dip",
-
- rsi: 34,
-
- seasonalMatch: 87,
-
- cashBuffer: 2100
-
-}
-
-========================================================
-
-LOAN MODEL
-
-========================================================
-
-{
-
- id: "LN-28491",
-
- borrowerId: "BR-10482",
-
- principal: 120000,
-
- balance: 82000,
-
- installment: 7500,
-
- tenure: 18,
-
- remainingPeriods: 11
-
-}
-
-========================================================
-
-TRANSACTION MODEL
-
-========================================================
-
-{
-
- id: "TX-10001",
-
- borrowerId: "BR-10482",
-
- date: "2026-08-15",
-
- amount: 28000,
-
- type: "income",
-
- source: "market_sales"
-
-}
-
-Types:
-
-income
-
-expense
-
-repayment
-
-========================================================
-
-FORECAST MODEL
-
-========================================================
-
-{
-
- borrowerId,
-
- period,
-
- pointEstimate,
-
- lowerBound,
-
- upperBound
-
-}
-
-========================================================
-
-RSI MODEL
-
-========================================================
-
-{
-
- borrowerId,
-
- cycle,
-
- value,
-
- components,
-
- state
-
-}
-
-Components:
-
-CBR
-
-RV
-
-TM
-
-RTR
-
-USD
-
-ESI
-
-========================================================
-
-EVIDENCE MODEL
-
-========================================================
-
-{
-
- borrowerId,
-
- cycle,
-
- statement,
-
- component,
-
- direction,
-
- contribution
-
-}
-
-========================================================
-
-PLAN MODEL
-
-========================================================
-
-{
-
- id,
-
- borrowerId,
-
- type,
-
- installment,
-
- revisedTenure,
-
- projectedBuffer,
-
- recoveryImpact,
-
- recommended
-
-}
-
-========================================================
-
-DECISION MODEL
-
-========================================================
-
-{
-
- id,
-
- borrowerId,
-
- officerId,
-
- action,
-
- planId,
-
- timestamp,
-
- notes,
-
- evidenceSnapshot,
-
- configurationSnapshot
-
-}
-
-========================================================
-
-SIMULATED ANALYSIS ENGINE
-
-========================================================
-
-Do not require actual ML infrastructure.
-
-Create modular functions:
-
-analyzeBorrower()
-
-forecastCashFlow()
-
-decomposeCashFlow()
-
-calculateRSI()
-
-classifyStress()
-
-generateEvidence()
-
-generateRepaymentPlans()
-
-simulateOutcome()
-
-recalibrateForecast()
-
-Use deterministic mock calculations.
-
-The interface should behave as if the actual ML pipeline is running.
-
-Keep all model simulation logic separate from UI.
-
-This should allow future replacement with:
-
-STL
-
-Prophet / NeuralProphet
-
-XGBoost / LightGBM
-
-SHAP
-
-without rewriting the UI.
-
-========================================================
-
-RSI LOGIC
-
-========================================================
-
-Create a weighted composite score from:
-
-Cash Buffer Ratio
-
-Residual Volatility
-
-Trend Momentum
-
-Repayment Track Record
-
-Unexplained Seasonal Deviation
-
-Expense Shock
-
-RSI range:
-
-0–100
-
-Classification:
-
-0–30:
-
-Stable
-
-31–50:
-
-Seasonal Dip
-
-51–70:
-
-Emerging Stress
-
-71–100:
-
-Structural Decline
-
-Use trend direction and seasonal-match confidence in classification.
-
-========================================================
-
-SEASONAL MATCH LOGIC
-
-========================================================
-
-The key prototype behavior:
-
-If current income decline resembles historical seasonal pattern:
-
-increase seasonal-match confidence
-
-reduce unexplained seasonal deviation
-
-avoid incorrectly classifying as structural decline
-
-If decline is persistent and does not match historical seasonality:
-
-low seasonal confidence
-
-higher structural signal
-
-higher RSI
-
-========================================================
-
-PLAN GENERATION LOGIC
-
-========================================================
-
-For:
-
-Seasonal Dip:
-
-generate:
-
-Step-down
-
-Skip & redistribute
-
-Tenure extension
-
-Recommended:
-
-Step-down
-
-For:
-
-Emerging Stress:
-
-generate:
-
-Step-down
-
-Tenure extension
-
-Moratorium
-
-For:
-
-Structural Decline:
-
-generate:
-
-Moratorium
-
-Tenure extension
-
-Skip & redistribute
-
-Recommended plan should depend on forecast trajectory.
-
-For Stable:
-
-do not show restructuring as a required intervention.
-
-Optionally show:
-
-Early close
-
-Top-up eligibility
-
-========================================================
-
-IMPORTANT FINANCIAL UX
-
-========================================================
-
-Never use language:
-
-"AI has decided."
-
-Use:
-
-"System recommendation"
-
-"Evidence"
-
-"Officer decision"
-
-"Recommended option"
-
-"Projected"
-
-"Estimated"
-
-"Forecast"
-
-Clearly distinguish:
-
-ACTUAL
-
-FORECAST
-
-RECOMMENDATION
-
-DECISION
-
-APPROVED
-
-========================================================
-
-NO FALSE CERTAINTY
-
-========================================================
-
-When displaying forecasts use:
-
-Projected
-
-Estimated
-
-Confidence
-
-Expected
-
-Never present simulated predictions as guaranteed outcomes.
-
-========================================================
-
-TABLES
-
-========================================================
-
-All tables should have:
-
-- sorting
-
-- filtering
-
-- search
-
-- pagination
-
-- hover states
-
-- row click
-
-- responsive horizontal scrolling
-
-========================================================
-
-CHARTS
-
-========================================================
-
-Use Recharts.
-
-Required charts:
-
-Portfolio health
-
-Cash-flow actual vs forecast
-
-Forecast confidence band
-
-Trend
-
-Seasonality
-
-Residual
-
-RSI history
-
-RSI contribution
-
-Forecast vs actual
-
-State distribution
-
-Feature importance
-
-Outcome tracking
-
-Charts should be clean and minimal.
-
-No 3D charts.
-
-No excessive colors.
-
-========================================================
-
-RESPONSIVENESS
-
-========================================================
-
-Optimize for:
-
-1440px desktop
-
-1280px laptop
-
-1024px tablet
-
-At smaller sizes:
-
-Collapse sidebar.
-
-Stack cards.
-
-Make tables horizontally scrollable.
-
-Keep charts readable.
-
-Drawers become full-screen sheets.
-
-========================================================
-
-LOADING STATES
-
-========================================================
-
-Create polished skeleton loaders.
-
-Example:
-
-"Analyzing borrower..."
-
-Show pipeline progress:
-
-Data verified
-
-✓
-
-Forecast generated
-
-✓
-
-RSI calculated
-
-✓
-
-Stress classified
-
-✓
-
-Evidence generated
-
-✓
-
-Plans generated
-
-✓
-
-Then:
-
-Analysis complete
-
-========================================================
-
-ERROR STATES
-
-========================================================
-
-Create graceful states for:
-
-Malformed CSV
-
-Insufficient history
-
-Missing transaction data
-
-Forecast unavailable
-
-No repayment history
-
-No recommendation
-
-Do not use browser alerts.
-
-Use inline error states and toast notifications.
-
-========================================================
-
-TOAST SYSTEM
-
-========================================================
-
-Use toast notifications for:
-
-Plan approved
-
-Plan modified
-
-Plan rejected
-
-Data imported
-
-Synthetic data generated
-
-Analysis complete
-
-Configuration saved
-
-Audit event created
-
-========================================================
-
-DEMO MODE
-
-========================================================
-
-Create a visible:
-
-DEMO MODE
-
-indicator.
-
-Add:
-
-"Reset demo"
-
-button.
-
-Reset should restore original demo state.
-
-Create:
-
-"Run complete demo"
-
-button.
-
-This should automatically walk through the product pipeline visually:
-
-1. Data ingestion
-
-2. Forecast
-
-3. Stress detection
-
-4. Evidence
-
-5. Plan generation
-
-6. Officer review
-
-7. Approval
-
-8. Audit
-
-9. Monitoring
-
-Use subtle animation.
-
-========================================================
-
-HACKATHON PRESENTATION MODE
-
-========================================================
-
-Create a special:
-
-Presentation Mode
-
-button.
-
-When enabled:
-
-Hide unnecessary navigation.
-
-Use a clean full-screen experience.
-
-Show:
-
-Cash-Flow Copilot
-
-Then:
-
-"Two income drops. Two different stories."
-
-Scenario cards:
-
-MEENA
-
-Seasonal Dip
-
-87% seasonal match
-
-RSI 34
-
-SURESH
-
-Structural Decline
-
-18% seasonal match
-
-RSI 76
-
-Button:
-
-Compare scenarios
-
-Create a side-by-side comparison.
-
-========================================================
-
-SIDE-BY-SIDE SCENARIO COMPARISON
-
-========================================================
-
-Create:
-
-Meena vs Suresh
-
-Columns:
-
-Metric
-
-Meena
-
-Suresh
-
-Income trend
-
-Seasonal
-
-Persistent decline
-
-Seasonal match
-
-87%
-
-18%
-
-RSI
-
-34
-
-76
-
-Cash buffer
-
-Positive
-
-Negative projected
-
-Repayment history
-
-11/12 on time
-
-Increasing irregularity
-
-Recommended intervention
-
-Step-down
-
-Moratorium / extension
-
-Evidence count
-
-5
-
-5
-
-Make this the centerpiece of the hackathon demo.
-
-========================================================
-
-PIPELINE VISUALIZATION
-
-========================================================
-
-Create reusable component:
-
-CashFlowPipeline
-
-Six stages:
-
-01 Data ingestion
-
-02 Cash-flow forecasting
-
-03 Stress detection
-
-04 Structuring engine
-
-05 Explainability
-
-06 Lender approval
-
-Then:
-
-Monitoring loop
-
-↓
-
-Actual outcome
-
-↓
-
+   ↓
+Observed Outcome
+   ↓
+Forecast Error
+   ↓
 Recalibration
+   ↓
+Next Forecast Cycle
+   ↺
+```
 
-↓
+This makes the prototype a **closed-loop decision-support system**, rather than a one-time prediction dashboard.
 
-Next forecast
+---
 
-Use thin connecting lines.
+# Application Routes
 
-Current active stage gets subtle amber highlight.
+The prototype contains the following operational routes.
 
-========================================================
+| Route | Purpose |
+|---|---|
+| `/` | Login / entry |
+| `/dashboard` | Portfolio overview and attention queue |
+| `/borrowers` | Borrower directory |
+| `/borrowers/meena` | Meena hero analysis |
+| `/borrowers/suresh` | Suresh hero analysis |
+| `/portfolio` | Portfolio filtering and risk matrix |
+| `/alerts` | Early-warning stress alerts |
+| `/plans` | Repayment plan review queue and history |
+| `/forecasts` | Portfolio / borrower forecasting views |
+| `/monitoring` | Monitoring and recalibration cycle |
+| `/data-ingestion` | Data ingestion workflow |
+| `/model-insights` | RSI configuration and model insights |
+| `/audit-log` | Immutable decision history |
+| `/settings` | Profile and system configuration |
+| `/help` | Product and methodology guidance |
 
-GLOBAL SEARCH
+---
 
-========================================================
+# Hero Borrower Analysis Workspace
 
-Command palette:
+The `/borrowers/:id` page is the centerpiece of the application.
 
-⌘K / Ctrl+K
+Its information architecture is:
 
-Search across:
+```text
+Borrower
+   ↓
+Analysis Summary
+   ↓
+Cash-Flow Outlook
+   ↓
+Decomposition
+   ↓
+RSI Analysis
+   ↓
+Evidence
+   ↓
+System Recommendation
+   ↓
+Decision Context
+   ↓
+Officer Review
+   ↓
+Audit / Monitoring
+```
 
-borrowers
+## Borrower Header
 
-loans
+Displays:
 
-alerts
+- Borrower name
+- Occupation
+- Borrower ID
+- Loan ID
+- Stress state
+- RSI
+- Seasonal match
 
-plans
+---
 
-audit logs
+## Analysis Summary
 
-========================================================
+The analysis summary uses three concise layers:
 
-ACCESSIBILITY
+### Signal
 
-========================================================
+What is happening?
 
-Ensure:
+Example:
 
-Keyboard navigation
+> Income is declining.
 
-Visible focus states
+### Interpretation
 
-ARIA labels
+What does the analysis suggest?
 
-Readable contrast
+Example:
 
-Non-color status indicators
+> The decline strongly matches historical seasonality.
 
-Tooltips
+### Implication
 
-Accessible buttons
+What does this mean operationally?
 
-Responsive layout
+Example:
 
-========================================================
+> Current evidence supports a temporary repayment adjustment rather than treating the decline as structural.
 
-PERFORMANCE
+---
 
-========================================================
+## Cash-Flow Outlook
 
-The prototype should feel instant.
+The chart includes:
 
-Use:
+- Actual cash flow
+- Forecast
+- Confidence band
+- Expenses
+- Repayment
+- Today marker
+- 6M / 12M / 18M horizon controls
 
-Memoization where useful
+The visualization is designed to answer the operational question:
 
-Lazy-loaded routes
+> **What happens if nothing changes?**
 
-Efficient chart rendering
+---
 
-Virtualized table if necessary
+## Decomposition
 
-Local mock data
+The decomposition view separates the cash-flow signal into:
 
-No unnecessary API calls.
+```text
+Trend
+Seasonal
+Residual
+```
 
-========================================================
+This helps distinguish:
 
-NO PLACEHOLDER SCREENS
+- underlying trajectory
+- recurring seasonal patterns
+- unexplained variation
 
-========================================================
+The UI can identify the dominant driver for the hero scenarios.
 
-Every navigation item must lead to a real screen.
+---
 
-Do not create:
+## RSI Analysis
 
-"Coming soon"
+The RSI section explains the score through component-level views.
 
-"Lorem ipsum"
+Each component can show:
 
-Empty placeholder cards.
+- Score
+- Weight / maximum contribution
+- Progress
+- Explanation
 
-Every page must contain realistic content.
+This turns a single risk score into an interpretable analysis.
 
-========================================================
+---
 
-CODE QUALITY
+## Evidence
 
-========================================================
+Evidence cards provide a structured explanation of the model output.
 
-Use:
+The officer can review evidence before making a decision.
 
-React
+---
 
-TypeScript
+## System Recommendation
 
-Vite
+The recommendation section provides:
 
-Tailwind CSS
+- Recommended repayment option
+- Alternative options
+- Current vs proposed installment
+- Projected buffer
+- Tenure impact
+- Recovery impact
+- Concise rationale
 
-shadcn/ui
+The recommendation is generated by the existing analysis engine.
 
-Lucide React
+---
 
-Recharts
+# Demo Scenarios
 
-Use reusable components.
+## Meena Krishnan
 
-Keep business logic separate from presentation.
+**Borrower ID:** `BR-10482`
 
-Create:
+**Occupation:** Farmer
 
-/data
+**RSI:** `34 / 100`
 
-/models
+**Seasonal Match:** `87%`
 
-/lib
+**Classification:** `Seasonal Dip`
 
-/components
+### Story
 
-/pages
+Meena is experiencing income pressure, but the observed decline closely matches her historical seasonal pattern.
 
-========================================================
+The demonstration therefore shows how the system can support a temporary repayment adjustment rather than treating the decline as structural.
 
-SUGGESTED COMPONENT STRUCTURE
+---
 
-========================================================
+## Suresh Kumar
 
-src/
+**Borrower ID:** `BR-10921`
 
-components/
+**Occupation:** Gig Worker
 
-layout/
+**RSI:** `76 / 100`
 
-Sidebar
+**Seasonal Match:** `18%`
 
-Topbar
+**Classification:** `Structural Decline`
 
-Breadcrumbs
+### Story
 
-CommandPalette
+Suresh's decline has a much weaker seasonal explanation and a stronger persistent negative trend.
 
-dashboard/
+The demonstration therefore produces a materially different interpretation and repayment-plan direction.
 
-KPIGrid
+---
 
-PortfolioHealth
+# Technology Stack
 
-AttentionQueue
+The prototype is built around a modern TypeScript/React application architecture.
 
-ActivityTimeline
+### Frontend
 
-borrower/
+- React
+- TypeScript
+- TanStack Router
+- shadcn/ui
+- Recharts
+- cmdk
+- CSS design tokens
 
-BorrowerHeader
+### Application Architecture
 
-CashFlowChart
+```text
+React UI
+   ↓
+App State / Context
+   ↓
+Analysis Engine
+   ↓
+Synthetic Borrower Data
+```
 
-DecompositionChart
+The engine remains separated from presentation components.
 
-RSIGauge
+---
 
-RSIComponents
+# Core Architecture
 
-EvidencePanel
+The foundation layer is organized around three major files:
 
-EvidenceDrawer
+```text
+src/lib/
+├── engine.ts
+├── data.ts
+└── types.ts
+```
 
-PlanCards
+## `engine.ts`
 
-PlanComparison
+Contains the analysis pipeline, including:
 
-PlanReviewDrawer
+- decomposition
+- forecasting
+- RSI calculation
+- classification
+- evidence generation
+- repayment-plan generation
+- outcome simulation
+- recalibration
 
-ApprovalDialog
+The UI calls the engine and renders the returned analysis.
 
-BorrowerTimeline
+Business logic is intentionally kept out of UI components.
 
-pipeline/
+---
 
-CashFlowPipeline
+## `data.ts`
 
-PipelineStage
+Contains:
 
-monitoring/
+- Hero borrowers
+- Synthetic portfolio data
+- Borrower generation
+- Demonstration financial histories
 
-ForecastActualChart
+The prototype contains a 200-borrower synthetic portfolio.
 
-OutcomeCard
+---
 
-RecalibrationPanel
+## `types.ts`
 
-audit/
+Defines the application's core domain interfaces, including concepts such as:
 
-AuditTable
+- Borrower
+- Loan
+- Analysis
+- RSI score
+- Evidence
+- Repayment plan
+- Officer decision
+- Audit event
+- Monitoring outcome
+- Model configuration
 
-AuditDrawer
+---
 
-DecisionSnapshot
+# State Management
 
-data/
+The application uses React Context + `useReducer` for centralized prototype state.
 
-UploadZone
+The state layer handles:
 
-DataQuality
+- Selected borrower
+- Analyses
+- Officer decisions
+- Audit events
+- Monitoring outcomes
+- Activity
+- Model configuration
+- Demo reset
 
-SyntheticGenerator
+This keeps the UI reactive while avoiding unnecessary external state dependencies.
 
-common/
+---
 
-StatusBadge
+# Design System
 
-MetricCard
+The product uses a restrained institutional fintech aesthetic.
 
-EmptyState
+### Visual direction
 
-LoadingState
+- Warm ivory backgrounds
+- White surfaces
+- Charcoal typography
+- Muted slate secondary text
+- Restrained amber accent
+- Semantic green / red states
+- Thin borders
+- Subtle shadows
+- Compact information density
 
-ErrorState
+### Typography
 
-Toast
+The UI uses a modern sans-serif hierarchy based around Inter / Geist-style typography.
 
-========================================================
+### Product personality
 
-FINAL NAVIGATION
+The visual language aims for:
 
-========================================================
+> **Institutional fintech + AI decision intelligence + modern operations software**
 
-Sidebar must contain:
+Avoided design patterns include:
 
-Overview
+- excessive gradients
+- neon AI colors
+- oversized illustrations
+- excessive glassmorphism
+- chatbot-centric layouts
 
-Portfolio
+---
 
-Borrowers
+# Product Principles
 
-Alerts
+## 1. Explain before recommending
 
-Plans
+The system should show what is happening and why before presenting an intervention.
 
-Forecasts
+## 2. Recommendation is not execution
 
-Monitoring
+The AI provides decision support.
 
-Model Insights
+It does not independently execute lending actions.
 
-Data Ingestion
+## 3. Human approval is explicit
 
-Audit Log
+The officer is always part of the decision path.
 
-Settings
+## 4. Decisions are auditable
 
-Help
+Officer actions and decision-time evidence are recorded.
 
-========================================================
+## 5. Outcomes close the loop
 
-FINAL DEMO SCRIPT
+Observed outcomes are compared with forecasts for future recalibration.
 
-========================================================
+---
 
-The application must support this exact presentation:
+# End-to-End Working Flow
 
-STEP 1
+```text
+┌──────────────────────┐
+│     Data Ingestion   │
+│ Income / Expenses /  │
+│ Repayment History    │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Cash-Flow Forecast   │
+│ STL + Forecast Model │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Stress Detection     │
+│ RSI 0–100             │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Stress Classification │
+│ Seasonal / Structural │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Explainability       │
+│ Evidence + Drivers   │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Repayment Plans      │
+│ Recommended + Alt.   │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Officer Review       │
+│ Understand / Compare │
+│ Decide / Record      │
+└──────────┬───────────┘
+           ↓
+    ┌──────┼──────┐
+    ↓      ↓      ↓
+ Approve  Modify Reject
+    └──────┼──────┘
+           ↓
+┌──────────────────────┐
+│ Audit Event          │
+│ Evidence Snapshot    │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Monitoring Cycle     │
+│ Actual vs Forecast   │
+└──────────┬───────────┘
+           ↓
+┌──────────────────────┐
+│ Error + Recalibrate  │
+└──────────┬───────────┘
+           │
+           └──────────→ Next Cycle
+```
 
-Open dashboard.
+---
 
-Show:
+# Why the Human-in-the-Loop Design Matters
 
-200 active loans
+The prototype deliberately separates:
 
-146 stable
+### Model output
 
-38 attention
+> “Based on the available evidence, this repayment option is recommended.”
 
-16 structural decline
+from:
 
-STEP 2
+### Human decision
 
-Open Meena.
+> “The loan officer reviewed the evidence and chose this action.”
 
-Show:
+This separation makes the workflow transparent and auditable.
 
-RSI 34
+The prototype does not represent the AI as having independent authority over the loan.
 
-Seasonal Dip
+---
 
-87% seasonal match
+# What Is Simulated
 
-STEP 3
+This is a prototype / demonstration system.
 
-Open cash-flow chart.
+The following are simulated:
 
-Show income decline.
+- Borrower portfolio
+- Financial histories
+- Forecasts
+- RSI analysis
+- Stress classifications
+- Repayment plans
+- Monitoring outcomes
+- Recalibration
+- Officer profile
+- Decision records
 
-STEP 4
+No real lending-system transaction is executed.
 
-Open decomposition.
+No real borrower decision is made.
 
-Show:
+---
 
-Trend stable
+# Running the Project
 
-Seasonality strong
+Install dependencies:
 
-Residual low
+```bash
+npm install
+```
 
-STEP 5
+Start the development server:
 
-Open explainability.
-
-Show why this is seasonal.
-
-STEP 6
-
-Open repayment plans.
-
-Show:
-
-Seasonal Step-Down
-
-RECOMMENDED
-
-STEP 7
-
-Click:
-
-Review recommendation
-
-STEP 8
-
-Show:
-
-AI recommendation ≠ automatic action
-
-Officer decision required.
-
-STEP 9
-
-Click:
-
-Approve plan
-
-STEP 10
-
-Show:
-
-Approval confirmation.
-
-STEP 11
-
-Open:
-
-Audit Log
-
-Show exact decision snapshot.
-
-STEP 12
-
-Switch to Suresh.
-
-Show:
-
-RSI 76
-
-Structural Decline
-
-18% seasonal match.
-
-STEP 13
-
-Show six-period declining trend.
-
-STEP 14
-
-Show negative projected buffer.
-
-STEP 15
-
-Show explainability.
-
-STEP 16
-
-Show different repayment structures.
-
-STEP 17
-
-Open monitoring.
-
-Show:
-
-Forecast → Actual → Error → Recalibration.
-
-STEP 18
-
-Run next cycle.
-
-Show updated borrower analysis.
-
-========================================================
-
-CORE STORY OF THE PRODUCT
-
-========================================================
-
-The entire product should communicate this:
-
-"Cash-flow stress is not binary."
-
-A missed or reduced repayment can mean:
-
-Temporary seasonal pressure
-
-OR
-
-Genuine financial deterioration.
-
-Cash-Flow Copilot identifies the difference using:
-
-Cash-flow patterns
-
-Forecasts
-
-Seasonality
-
-Repayment behavior
-
-Expense changes
-
-Cash buffer
-
-Explainable evidence
-
-Then it proposes:
-
-"Here are the options."
-
-NOT:
-
-"Here is what you must do."
-
-The officer remains the final decision-maker.
-
-========================================================
-
-FINAL QUALITY BAR
-
-========================================================
-
-The finished application must look like a serious AI fintech startup product.
-
-It should be suitable for:
-
-Hackathon judging
-
-Investor demonstration
-
-Product walkthrough
-
-Technical architecture presentation
-
-The UI should feel closer to:
-
-AI operations console
-
-+
-
-premium fintech dashboard
-
-+
-
-model transparency workspace
-
-rather than:
-
-traditional banking software
-
-or
-
-generic admin dashboard.
-
-Prioritize:
-
-1. Borrower analysis
-
-2. Seasonal vs structural distinction
-
-3. Explainability
-
-4. Repayment plan recommendation
-
-5. Human approval workflow
-
-6. Auditability
-
-7. Monitoring feedback loop
-
-8. Premium UI
-
-Build the complete end-to-end prototype now.
-
-Do not stop at static screens.
-
-All major interactions must work using local simulated data/state.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/3754a1ab-a65b-45fd-8874-9224d7009fed).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+```bash
 npm run dev
 ```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+The expected build result is a successful TypeScript/application build with no build errors.
+
+---
+
+# Demo Reset
+
+The topbar contains:
+
+**Reset Demo**
+
+This restores the initial demonstration state, including:
+
+- initial decisions
+- monitoring cycle
+- activity state
+- portfolio baseline
+
+Use this before a presentation to ensure a predictable demo.
+
+---
+
+# Presentation Flow
+
+For a short product demonstration:
+
+```text
+Dashboard
+   ↓
+Meena
+   ↓
+RSI 34 / 87% seasonal
+   ↓
+Forecast
+   ↓
+Evidence
+   ↓
+Recommendation
+   ↓
+Officer Review
+   ↓
+Approve / Modify / Reject
+   ↓
+Audit
+   ↓
+Suresh
+   ↓
+RSI 76 / 18% seasonal
+   ↓
+Structural Decline
+   ↓
+Monitoring
+   ↓
+Recalibration
+```
+
+### Closing line
+
+> **“Cash-Flow Copilot doesn't just predict stress. It explains the stress, proposes an intervention, keeps the officer in control, records the decision, and learns from the outcome.”**
+
+# TWO INCOME DROPS.  
+# TWO DIFFERENT STORIES.  
+# ONE HUMAN DECISION.
+
+---
+
+# Project Status
+
+The prototype currently includes:
+
+- Complete analysis engine
+- Synthetic 200-borrower portfolio
+- 14+ operational routes
+- Borrower analysis workspace
+- Forecast visualizations
+- Decomposition analysis
+- RSI analysis
+- Evidence layer
+- Repayment recommendations
+- Alternative repayment options
+- Human-in-the-loop review workflow
+- Approve / Modify / Reject paths
+- Audit trail
+- Monitoring cycle
+- Recalibration simulation
+- Model insights
+- Data ingestion UI
+- Command palette
+- Responsive layouts
+- Presentation-oriented hero scenarios
+
+The application has been built and verified through the prototype workflow, with `npm run build` completing successfully.
+
+---
+
+# Disclaimer
+
+**Cash-Flow Copilot is a prototype for demonstrating AI-assisted lender operations and decision intelligence.**
+
+It uses synthetic data and simulated analysis.
+
+It is not a production credit decisioning system and does not execute real lending, repayment, restructuring, or loan-system changes.
+
+All final decisions in the prototype remain with the human loan officer.
+
+---
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+

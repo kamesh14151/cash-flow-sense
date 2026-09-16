@@ -10,33 +10,206 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AlertsRouteImport } from './routes/alerts'
+import { Route as AuditLogRouteImport } from './routes/audit-log'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DataIngestionRouteImport } from './routes/data-ingestion'
+import { Route as ForecastsRouteImport } from './routes/forecasts'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as ModelInsightsRouteImport } from './routes/model-insights'
+import { Route as MonitoringRouteImport } from './routes/monitoring'
+import { Route as PlansRouteImport } from './routes/plans'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as BorrowersIndexRouteImport } from './routes/borrowers/index'
+import { Route as BorrowersIdRouteImport } from './routes/borrowers/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditLogRoute = AuditLogRouteImport.update({
+  id: '/audit-log',
+  path: '/audit-log',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataIngestionRoute = DataIngestionRouteImport.update({
+  id: '/data-ingestion',
+  path: '/data-ingestion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForecastsRoute = ForecastsRouteImport.update({
+  id: '/forecasts',
+  path: '/forecasts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelInsightsRoute = ModelInsightsRouteImport.update({
+  id: '/model-insights',
+  path: '/model-insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitoringRoute = MonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansRoute = PlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BorrowersIndexRoute = BorrowersIndexRouteImport.update({
+  id: '/borrowers/',
+  path: '/borrowers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BorrowersIdRoute = BorrowersIdRouteImport.update({
+  id: '/borrowers/$id',
+  path: '/borrowers/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/audit-log': typeof AuditLogRoute
+  '/dashboard': typeof DashboardRoute
+  '/data-ingestion': typeof DataIngestionRoute
+  '/forecasts': typeof ForecastsRoute
+  '/help': typeof HelpRoute
+  '/model-insights': typeof ModelInsightsRoute
+  '/monitoring': typeof MonitoringRoute
+  '/plans': typeof PlansRoute
+  '/portfolio': typeof PortfolioRoute
+  '/settings': typeof SettingsRoute
+  '/borrowers/$id': typeof BorrowersIdRoute
+  '/borrowers/': typeof BorrowersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/audit-log': typeof AuditLogRoute
+  '/dashboard': typeof DashboardRoute
+  '/data-ingestion': typeof DataIngestionRoute
+  '/forecasts': typeof ForecastsRoute
+  '/help': typeof HelpRoute
+  '/model-insights': typeof ModelInsightsRoute
+  '/monitoring': typeof MonitoringRoute
+  '/plans': typeof PlansRoute
+  '/portfolio': typeof PortfolioRoute
+  '/settings': typeof SettingsRoute
+  '/borrowers/$id': typeof BorrowersIdRoute
+  '/borrowers': typeof BorrowersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/audit-log': typeof AuditLogRoute
+  '/dashboard': typeof DashboardRoute
+  '/data-ingestion': typeof DataIngestionRoute
+  '/forecasts': typeof ForecastsRoute
+  '/help': typeof HelpRoute
+  '/model-insights': typeof ModelInsightsRoute
+  '/monitoring': typeof MonitoringRoute
+  '/plans': typeof PlansRoute
+  '/portfolio': typeof PortfolioRoute
+  '/settings': typeof SettingsRoute
+  '/borrowers/$id': typeof BorrowersIdRoute
+  '/borrowers/': typeof BorrowersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alerts'
+    | '/audit-log'
+    | '/dashboard'
+    | '/data-ingestion'
+    | '/forecasts'
+    | '/help'
+    | '/model-insights'
+    | '/monitoring'
+    | '/plans'
+    | '/portfolio'
+    | '/settings'
+    | '/borrowers/$id'
+    | '/borrowers/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alerts'
+    | '/audit-log'
+    | '/dashboard'
+    | '/data-ingestion'
+    | '/forecasts'
+    | '/help'
+    | '/model-insights'
+    | '/monitoring'
+    | '/plans'
+    | '/portfolio'
+    | '/settings'
+    | '/borrowers/$id'
+    | '/borrowers'
+  id:
+    | '__root__'
+    | '/'
+    | '/alerts'
+    | '/audit-log'
+    | '/dashboard'
+    | '/data-ingestion'
+    | '/forecasts'
+    | '/help'
+    | '/model-insights'
+    | '/monitoring'
+    | '/plans'
+    | '/portfolio'
+    | '/settings'
+    | '/borrowers/$id'
+    | '/borrowers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlertsRoute: typeof AlertsRoute
+  AuditLogRoute: typeof AuditLogRoute
+  DashboardRoute: typeof DashboardRoute
+  DataIngestionRoute: typeof DataIngestionRoute
+  ForecastsRoute: typeof ForecastsRoute
+  HelpRoute: typeof HelpRoute
+  ModelInsightsRoute: typeof ModelInsightsRoute
+  MonitoringRoute: typeof MonitoringRoute
+  PlansRoute: typeof PlansRoute
+  PortfolioRoute: typeof PortfolioRoute
+  SettingsRoute: typeof SettingsRoute
+  BorrowersIdRoute: typeof BorrowersIdRoute
+  BorrowersIndexRoute: typeof BorrowersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +221,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit-log': {
+      id: '/audit-log'
+      path: '/audit-log'
+      fullPath: '/audit-log'
+      preLoaderRoute: typeof AuditLogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-ingestion': {
+      id: '/data-ingestion'
+      path: '/data-ingestion'
+      fullPath: '/data-ingestion'
+      preLoaderRoute: typeof DataIngestionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forecasts': {
+      id: '/forecasts'
+      path: '/forecasts'
+      fullPath: '/forecasts'
+      preLoaderRoute: typeof ForecastsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/model-insights': {
+      id: '/model-insights'
+      path: '/model-insights'
+      fullPath: '/model-insights'
+      preLoaderRoute: typeof ModelInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitoring': {
+      id: '/monitoring'
+      path: '/monitoring'
+      fullPath: '/monitoring'
+      preLoaderRoute: typeof MonitoringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/borrowers/': {
+      id: '/borrowers/'
+      path: '/borrowers'
+      fullPath: '/borrowers/'
+      preLoaderRoute: typeof BorrowersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/borrowers/$id': {
+      id: '/borrowers/$id'
+      path: '/borrowers/$id'
+      fullPath: '/borrowers/$id'
+      preLoaderRoute: typeof BorrowersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlertsRoute: AlertsRoute,
+  AuditLogRoute: AuditLogRoute,
+  DashboardRoute: DashboardRoute,
+  DataIngestionRoute: DataIngestionRoute,
+  ForecastsRoute: ForecastsRoute,
+  HelpRoute: HelpRoute,
+  ModelInsightsRoute: ModelInsightsRoute,
+  MonitoringRoute: MonitoringRoute,
+  PlansRoute: PlansRoute,
+  PortfolioRoute: PortfolioRoute,
+  SettingsRoute: SettingsRoute,
+  BorrowersIdRoute: BorrowersIdRoute,
+  BorrowersIndexRoute: BorrowersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,8 +6,7 @@ export const BRANCH = "Salem Central Branch";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-/** 18 periods ending 2026-09 */
-export function periodKeys() {
+const CACHED_PERIOD_KEYS: { month: string; label: string; m: number }[] = (function () {
   const keys: { month: string; label: string; m: number }[] = [];
   for (let i = 17; i >= 0; i--) {
     const d = new Date(Date.UTC(2026, 8 - i, 1));
@@ -18,6 +17,11 @@ export function periodKeys() {
     });
   }
   return keys;
+})();
+
+/** 18 periods ending 2026-09 */
+export function periodKeys() {
+  return CACHED_PERIOD_KEYS;
 }
 
 const FIRST = [

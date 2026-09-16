@@ -368,11 +368,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (state.analyses[borrowerId]) return state.analyses[borrowerId];
       const b = state.borrowers.find((x) => x.id === borrowerId);
       if (!b) return null;
-      // Trigger lazy computation
-      dispatch({ type: "SELECT_BORROWER", borrowerId });
-      return null;
+      return analyzeBorrower(b, state.modelConfig);
     },
-    [state.analyses, state.borrowers],
+    [state.analyses, state.borrowers, state.modelConfig],
   );
 
   const selectedAnalysis = useMemo(
